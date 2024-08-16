@@ -11,7 +11,7 @@ export default function Navbar() {
   const context = useContext(Context);
   const { mode, ToggleMode } = context;
   return (
-    <div className="bg-white sticky top-0 z-50">
+    <div className="bg-transparent sticky top-0 z-50 pt-2">
       {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40  lg:hidden" onClose={setOpen}>
@@ -67,7 +67,6 @@ export default function Navbar() {
                           ? "font-medium text-pink-500 "
                           : "font-medium text-gray-900 "
                       }
-                      style={{ color: mode === "dark" ? "white" : "" }}
                     >
                       Products
                     </NavLink>
@@ -78,7 +77,7 @@ export default function Navbar() {
                       className={`${
                         mode === "dark"
                           ? " font-medium cursor-pointer bg-transparent "
-                          : " font-medium text-gray-700 cursor-pointer   "
+                          : " font-medium  cursor-pointer   "
                       }`}
                       defaultValue=""
                     >
@@ -97,7 +96,7 @@ export default function Navbar() {
                         className={`${
                           mode === "dark"
                             ? "text-xs font-medium  cursor-pointer bg-gray-700"
-                            : "text-xs font-medium text-gray-700 cursor-pointer bg-stone-100"
+                            : "text-xs font-medium  cursor-pointer bg-stone-100"
                         }`}
                         value="cloths"
                       >
@@ -107,7 +106,7 @@ export default function Navbar() {
                         className={`${
                           mode === "dark"
                             ? "text-xs font-medium   cursor-pointer bg-gray-700"
-                            : "text-xs font-medium cursor-pointer text-gray-700 bg-stone-100"
+                            : "text-xs font-medium cursor-pointer  bg-stone-100"
                         }`}
                         value="mobiles"
                       >
@@ -117,7 +116,7 @@ export default function Navbar() {
                         className={`${
                           mode === "dark"
                             ? "text-xs font-medium  cursor-pointer  bg-gray-700"
-                            : "text-xs font-medium cursor-pointer text-gray-700 bg-stone-100"
+                            : "text-xs font-medium cursor-pointer  bg-stone-100"
                         }`}
                         value="furniture"
                       >
@@ -127,7 +126,7 @@ export default function Navbar() {
                         className={`${
                           mode === "dark"
                             ? "text-xs font-medium  cursor-pointer  bg-gray-700"
-                            : "text-xs font-medium cursor-pointer text-gray-700 bg-stone-100"
+                            : "text-xs font-medium cursor-pointer  bg-stone-100"
                         }`}
                         value="electronics"
                       >
@@ -145,7 +144,6 @@ export default function Navbar() {
                           ? "font-medium text-pink-500 "
                           : "font-medium text-gray-900 "
                       }
-                      style={{ color: mode === "dark" ? "white" : "" }}
                     >
                       Safety
                     </NavLink>
@@ -160,7 +158,6 @@ export default function Navbar() {
                           ? "font-medium text-pink-500 "
                           : "font-medium text-gray-900 "
                       }
-                      style={{ color: mode === "dark" ? "white" : "" }}
                     >
                       Suppport
                     </NavLink>
@@ -186,35 +183,32 @@ export default function Navbar() {
       </Transition.Root>
 
       {/* desktop  */}
-      <header className="relative ">
-        <nav
-          aria-label="Top"
-          className={` px-3  ${
-            mode === "dark" ? "bg-gray-700 text-stone-100" : "bg-stone-100"
-          }`}
-        >
+      <header className="relative  ">
+        <nav aria-label="Top" className={` px-3 text-white `}>
           <div>
             <div className="flex h-16 items-center w-full">
               <button
                 type="button"
-                className="rounded-md bg-gray-300 p-2 text-gray-600 lg:hidden"
-                style={{
-                  backgroundColor: mode === "dark" ? "rgb(80 82 87)" : "",
-                  color: mode === "dark" ? "white" : "",
-                }}
+                className="rounded-md  p-2 text-gray-600 lg:hidden"
                 onClick={() => setOpen(true)}
               ></button>
 
               {/* Logo E-commerce*/}
-              <div className="ml-3 flex lg:ml-6">
+              <div className=" flex lg:ml-6">
                 <NavLink to={"/"} className="flex">
                   <div className="flex ">
-                    <h1
-                      className=" text-2xl font-bold text-black py-1 rounded"
-                      style={{ color: mode === "dark" ? "white" : "" }}
-                    >
-                      logo
-                    </h1>
+                    <div className="flex justify-center items-center">
+                      <img
+                        src="https://pnghq.com/wp-content/uploads/tinder-logo-png-free-png-images-download-20137-2048x1152.png"
+                        width={80}
+                        height={80}
+                        loading="lazy"
+                        className="pt-2"
+                      />
+                      <span className="font-bold lg:text-5xl text-3xl">
+                        tinder
+                      </span>
+                    </div>
                   </div>
                 </NavLink>
               </div>
@@ -226,88 +220,33 @@ export default function Navbar() {
                     to={"/"}
                     className={({ isActive }) =>
                       isActive
-                        ? "text-sm font-medium text-gray-700 border-b-2 border-pink-500"
-                        : "text-sm font-medium text-gray-700"
+                        ? "text-lg font-medium  border-b-2 border-pink-500"
+                        : "text-lg font-medium "
                     }
-                    style={{ color: mode === "dark" ? "white" : "" }}
                   >
                     Products{" "}
                   </NavLink>
                   {/* Learn */}
-                  <div className="m-auto ">
-                    <select
-                      className={`${
-                        mode === "dark"
-                          ? "text-sm font-medium cursor-pointer bg-gray-700 decoration-clone"
-                          : "text-sm font-medium text-gray-700 cursor-pointer  bg-stone-100 "
-                      }`}
-                      defaultValue=""
-                      // onChange={HandleChange}
-                    >
-                      <option
-                        className={`${
-                          mode === "dark"
-                            ? "text-sm font-medium bg-gray-700 cursor-pointer text-white"
-                            : "text-sm font-medium text-gray-700 cursor-pointer bg-stone-100"
-                        }`}
-                        value=""
-                        disabled
-                      >
-                        Categeory
-                      </option>
-                      <option
-                        className={`${
-                          mode === "dark"
-                            ? "text-sm font-medium  cursor-pointer bg-gray-700"
-                            : "text-sm font-medium text-gray-700 cursor-pointer bg-stone-100"
-                        }`}
-                        onClick={() => console.log("hi")}
-                        value="cloths"
-                      >
-                        Clothing
-                      </option>
-                      <option
-                        className={`${
-                          mode === "dark"
-                            ? "text-sm font-medium   cursor-pointer bg-gray-700"
-                            : "text-sm font-medium cursor-pointer text-gray-700 bg-stone-100"
-                        }`}
-                        value="mobiles"
-                      >
-                        Mobiles
-                      </option>
-                      <option
-                        className={`${
-                          mode === "dark"
-                            ? "text-sm font-medium  cursor-pointer  bg-gray-700"
-                            : "text-sm font-medium cursor-pointer text-gray-700 bg-stone-100"
-                        }`}
-                        value="furniture"
-                      >
-                        Furniture
-                      </option>
-                      <option
-                        className={`${
-                          mode === "dark"
-                            ? "text-sm font-medium  cursor-pointer  bg-gray-700"
-                            : "text-sm font-medium cursor-pointer text-gray-700 bg-stone-100"
-                        }`}
-                        value="electronics"
-                      >
-                        Electronics
-                      </option>
-                    </select>
-                  </div>
+
+                  <NavLink
+                    to={"/order"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-lg font-medium  border-b-2 border-pink-500"
+                        : "text-lg font-medium "
+                    }
+                  >
+                    Learn
+                  </NavLink>
 
                   {/* Safety */}
 
                   <NavLink
                     to={"/order"}
-                    style={{ color: mode === "dark" ? "white" : "" }}
                     className={({ isActive }) =>
                       isActive
-                        ? "text-sm font-medium text-gray-700 border-b-2 border-pink-500"
-                        : "text-sm font-medium text-gray-700"
+                        ? "text-lg font-medium  border-b-2 border-pink-500"
+                        : "text-lg font-medium "
                     }
                   >
                     Safety
@@ -319,10 +258,9 @@ export default function Navbar() {
                     to={"/dashboard"}
                     className={({ isActive }) =>
                       isActive
-                        ? "text-sm font-medium text-gray-700 border-b-2 border-pink-500"
-                        : "text-sm font-medium text-gray-700"
+                        ? "text-lg font-medium  border-b-2 border-pink-500"
+                        : "text-lg font-medium "
                     }
-                    style={{ color: mode === "dark" ? "white" : "" }}
                   >
                     Download
                   </NavLink>
@@ -333,10 +271,9 @@ export default function Navbar() {
                     to={"/aboutus"}
                     className={({ isActive }) =>
                       isActive
-                        ? "text-sm font-medium text-gray-700 border-b-2 border-pink-500"
-                        : "text-sm font-medium text-gray-700"
+                        ? "text-lg font-medium  border-b-2 border-pink-500"
+                        : "text-lg font-medium "
                     }
-                    style={{ color: mode === "dark" ? "white" : "" }}
                   >
                     Support
                   </NavLink>
@@ -359,10 +296,10 @@ export default function Navbar() {
 
                   {/* Login */}
 
-                  <div className=" lg:ml-6 lg:mr-5 lg:flex bg-pink-600 p-1.5 px-3 rounded-md shadow-sm hover:shadow-pink-300  text-white">
+                  <div className=" lg:ml-6 lg:mr-5 lg:flex bg-white p-1.5 lg:px-5 px-5 rounded-3xl shadow-sm hover:shadow-pink-300 text-black">
                     <Link
                       to={"/login"}
-                      className={`text-md font-bold cursor-pointer`}
+                      className={`text-lg font-bold cursor-pointer`}
                     >
                       Login
                     </Link>
