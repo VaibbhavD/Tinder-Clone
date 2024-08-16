@@ -296,7 +296,7 @@ export default function Navbar() {
 
                   {/* Login */}
 
-                  <div className=" lg:ml-6 lg:mr-5 lg:flex bg-white p-1.5 lg:px-5 px-5 rounded-3xl shadow-sm hover:shadow-pink-300 text-black">
+                  <div className="hidden md:block lg:ml-6 lg:mr-5 lg:flex bg-white p-1.5 lg:px-5 px-5 rounded-3xl shadow-sm hover:shadow-pink-300 text-black">
                     <Link
                       to={"/login"}
                       className={`text-lg font-bold cursor-pointer`}
