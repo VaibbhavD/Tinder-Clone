@@ -1,6 +1,7 @@
 import React from "react";
 import Hero_Section from "./Hero_Section";
-import Navbar from "./Navbar";
+import Testimonal from "./Testimonal";
+import Footer from "./Footer";
 
 function Home() {
   return (
@@ -12,6 +13,8 @@ function Home() {
       }}
     >
       <Hero_Section />
+      <Testimonal />
+      <Footer />
     </div>
   );
 }
