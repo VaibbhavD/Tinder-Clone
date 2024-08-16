@@ -193,7 +193,7 @@ export default function Navbar() {
             mode === "dark" ? "bg-gray-700 text-stone-100" : "bg-stone-100"
           }`}
         >
-          <div className="w-full">
+          <div>
             <div className="flex h-16 items-center w-full">
               <button
                 type="button"
@@ -202,6 +202,7 @@ export default function Navbar() {
                   backgroundColor: mode === "dark" ? "rgb(80 82 87)" : "",
                   color: mode === "dark" ? "white" : "",
                 }}
+                onClick={() => setOpen(true)}
               ></button>
 
               {/* Logo E-commerce*/}
@@ -218,8 +219,8 @@ export default function Navbar() {
                 </NavLink>
               </div>
 
-              <div className="ml-auto flex items-center">
-                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+              <div className="w-full flex justify-between ml-10">
+                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-start lg:space-x-6">
                   {/* Products */}
                   <NavLink
                     to={"/"}
@@ -342,28 +343,30 @@ export default function Navbar() {
                 </div>
 
                 {/* Dark Mode */}
-                <div className="flex mr-0 ml-2 lg:ml-6">
-                  <button className="" onClick={ToggleMode}>
-                    {/* <MdDarkMode size={35} style={{ color: mode === 'dark' ? 'white' : '' }} /> */}
-                    {mode === "light" ? (
-                      <FiSun className="" size={30} />
-                    ) : "dark" ? (
-                      <BsFillCloudSunFill size={30} />
-                    ) : (
-                      ""
-                    )}
-                  </button>
-                </div>
+                <div className="w-full flex  justify-end gap-5 lg:gap-0">
+                  <div className="flex mr-0 ml-2 lg:ml-6">
+                    <button className="" onClick={ToggleMode}>
+                      {/* <MdDarkMode size={35} style={{ color: mode === 'dark' ? 'white' : '' }} /> */}
+                      {mode === "light" ? (
+                        <FiSun className="" size={30} />
+                      ) : "dark" ? (
+                        <BsFillCloudSunFill size={30} />
+                      ) : (
+                        ""
+                      )}
+                    </button>
+                  </div>
 
-                {/* Login */}
+                  {/* Login */}
 
-                <div className=" lg:ml-6 lg:-mr-10 -mr-5 ml-3 lg:flex bg-pink-600 p-1.5 px-3 rounded-md shadow-sm hover:shadow-pink-300  text-white">
-                  <Link
-                    to={"/login"}
-                    className={`text-md font-bold cursor-pointer`}
-                  >
-                    Login
-                  </Link>
+                  <div className=" lg:ml-6 lg:mr-5 lg:flex bg-pink-600 p-1.5 px-3 rounded-md shadow-sm hover:shadow-pink-300  text-white">
+                    <Link
+                      to={"/login"}
+                      className={`text-md font-bold cursor-pointer`}
+                    >
+                      Login
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
