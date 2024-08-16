@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { ContextProvider } from "./context/contextProvider";
+import { BrowserRouter } from "react-router-dom";
 import "./App.css";
+import Navbar from "./component/Navbar";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div>
-        <h1>Vaibhav</h1>
-      </div>
-    </>
+    <ContextProvider>
+      <BrowserRouter>
+        <Navbar />
+      </BrowserRouter>
+    </ContextProvider>
   );
 }
 
