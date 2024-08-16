@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { context } from "./context";
+import Context from "./context";
 
 export const ContextProvider = (props) => {
   const localMode = localStorage.getItem("mode");
@@ -15,4 +15,10 @@ export const ContextProvider = (props) => {
       localStorage.setItem("mode", "white");
     }
   };
+
+  const context = {
+    mode: Mode,
+    ToggleMode: ToggleMode,
+  };
+  return <Context.Provider value={context}>{props.children}</Context.Provider>;
 };
