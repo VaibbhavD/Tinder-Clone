@@ -13,3 +13,8 @@
     scrollbar-width: none; /* Firefox */
   }
 }
+.hide-inputScroll::-webkit-outer-spin-button,
+.hide-inputscroll::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
