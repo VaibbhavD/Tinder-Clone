@@ -4,8 +4,11 @@ import Testimonal from "../Testimonal/Testimonal";
 import Footer from "./Footer";
 import Modal from "../Modal/Modal";
 import Login from "../Authentication/Login";
+import MobileSignup from "../Authentication/MobileSignup";
+import Context from "../../context/context";
 
 function Home() {
+  const context = useContext(Context);
   return (
     <div
       className="w-full min-h-screen lg:bg-contain bg-fixed"
@@ -17,8 +20,11 @@ function Home() {
       <Hero_Section />
       <Testimonal />
       <Footer />
-      <Modal>
+      <Modal isshown={context.isLoginPopup}>
         <Login />
+      </Modal>
+      <Modal isshown={context.isMobileLoginPopup}>
+        <MobileSignup />
       </Modal>
     </div>
   );
