@@ -2,8 +2,8 @@ import React from "react";
 
 function UserForm() {
   return (
-    <>
-      <section class="max-w-4xl px-6 py-4 mx-auto mt-4 bg-[#111418] rounded-md shadow-md">
+    <div className="w-full h-full bg-[#111418]">
+      <section class="max-w-4xl px-6 py-4 mx-auto  bg-[#111418] rounded-md shadow-md">
         <div className="flex items-center">
           <img
             src="https://pnghq.com/wp-content/uploads/tinder-logo-png-free-png-images-download-20137-2048x1152.png"
@@ -138,6 +138,7 @@ function UserForm() {
               </select>
             </div>
           </div>
+          {/* Relationship */}
           <div className="mt-2">
             <label
               class="text-white dark:text-gray-200"
@@ -170,14 +171,14 @@ function UserForm() {
             </label>
           </div>
 
-          <div class="flex justify-end mt-6 mb-4 w-full">
+          <div class="flex justify-end mt-6 mb-9  w-full">
             <button class="px-6 w-full py-3 leading-5 font-bold text-white transition-colors duration-200 transform bg-[#FE4654] rounded-md ">
-              Save
+              Next
             </button>
           </div>
         </form>
       </section>
-    </>
+    </div>
   );
 }
 
