@@ -1,5 +1,7 @@
 import React, { useContext, useRef, useState } from "react";
 import Context from "../../context/context";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function MobileSignup() {
   // Country Codes
@@ -17,6 +19,8 @@ function MobileSignup() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [Otp, SetOtp] = useState(""); // OTP state
   const [userOtp, setUserOtp] = useState(""); // User input OTP
+
+  const navigate = useNavigate();
 
   // Create refs for each input field
   const inputRefs = useRef([]);
@@ -54,6 +58,9 @@ function MobileSignup() {
   const verifyOtp = () => {
     if (Otp === userOtp) {
       alert("OTP Verified Successfully!");
+      toast.success("Verifird Successfully");
+      navigate("/onboard");
+
       // Proceed with the next steps
     } else {
       alert("Invalid OTP, please try again.");
