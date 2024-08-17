@@ -38,17 +38,13 @@ function Login() {
         MobileLoginPopup();
         // navigate("/"); // Redirect to home or profile page
       } else {
-        // User already exists
-        toast.error("User already exists. Please sign in.");
         // await Auth.signOut(); // Sign out the user to clear the state
         console.log("Error");
         Setloader(false);
       }
     } catch (error) {
-      toast.error(error.message);
       Setloader(false);
     } finally {
-      toast.success("hi");
       LoginPopup();
       Setloader(false);
     }
