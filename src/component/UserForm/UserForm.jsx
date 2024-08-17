@@ -1,165 +1,242 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import Context from "../../context/context";
 
 function UserForm() {
+  const { User, userPhoneNumber, AddNewUser } = useContext(Context); // Get email and phone from context
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    image: "",
+    birthDate: "",
+    gender: "Male",
+    relationship: "Short Term",
+    email: User.email,
+    phoneNumber: userPhoneNumber,
+  });
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
+    });
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({
+        ...formData,
+        image: URL.createObjectURL(file),
+      });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!formData.termsAccepted) {
+      alert("You must agree to the terms and conditions");
+      return;
+    }
+
+    const newUser = {
+      ...formData,
+    };
+
+    // Call your addNewUser function here with newUser data
+    addNewUser(newUser);
+  };
+
+  const addNewUser = (user) => {
+    console.log("New user added:", user);
+    AddNewUser(user);
+    // Add logic to store the user data (e.g., API call or Firebase)
+  };
+
   return (
-    <div className="w-full h-full bg-[#111418]">
-      <section class="max-w-4xl px-6 py-4 mx-auto  bg-[#111418] rounded-md shadow-md">
+    <div className="w-full h-screen pt-10 bg-[#111418]">
+      <button
+        className={`p-3 lg:ml-44 duration-200 rounded-full bg-gray-600 text-white absolute top-5 }`}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="size-6 hover:scale-110 font-bold "
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+          />
+        </svg>
+      </button>
+      <section class="max-w-4xl px-6 py-4 mx-auto bg-[#111418] rounded-md shadow-md">
         <div className="flex items-center">
           <img
             src="https://pnghq.com/wp-content/uploads/tinder-logo-png-free-png-images-download-20137-2048x1152.png"
-            width={70}
-            height={70}
+            width={80}
+            height={80}
             loading="lazy"
-            className="pt-2 "
+            className="pt-2"
           />
-          <p className="text-white text-4xl font-bold">tinder</p>
+          <p className="text-white text-5xl font-bold">tinder</p>
         </div>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div class="grid grid-cols-1 gap-2 mt-2 sm:grid-cols-2">
-            {/* firstname & lastname*/}
-            <div>
-              <label class="text-white dark:text-gray-200" for="username">
+            {/* Firstname & Lastname */}
+            <div className="mt-8">
+              <label class="text-white " htmlFor="firstName">
                 Firstname
               </label>
               <input
-                id="username"
+                id="firstName"
+                name="firstName"
                 type="text"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                value={formData.firstName}
+                onChange={handleChange}
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md"
               />
-              {/* lastname */}
-              <label class="text-white dark:text-gray-200" for="username">
-                LastName
-              </label>
-              <input
-                id="username"
-                type="text"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-              />
+
+              <div className="mt-4">
+                {" "}
+                <label class="text-white dark:text-gray-200" htmlFor="lastName">
+                  LastName
+                </label>
+                <input
+                  id="lastName"
+                  name="lastName"
+                  type="text"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md"
+                />
+              </div>
             </div>
 
             {/* Upload Image */}
             <div>
-              <label class="block text-sm font-medium text-white">Image</label>
-              <div class=" w-full mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+              <label class="block text-sm font-medium text-white"></label>
+              <div class="w-full mt-1 flex justify-center px-6 pt-5 pb-6">
                 <div class="flex items-center space-x-6">
                   <div class="shrink-0">
                     <img
                       id="preview_img"
-                      class="h-30 w-30 object-cover rounded-full"
-                      src="https://lh3.googleusercontent.com/a-/AFdZucpC_6WFBIfaAbPHBwGM9z8SxyM1oV4wB4Ngwp_UyQ=s96-c"
-                      alt="Current profile photo"
+                      class="h-32 w-32 object-cover rounded-full"
+                      src={formData.image || "https://via.placeholder.com/150"}
+                      alt="Profile photo"
+                      width={80}
+                      height={80}
                     />
                   </div>
                   <label class="block">
                     <span class="sr-only">Choose profile photo</span>
                     <input
                       type="file"
-                      onchange="loadFile(event)"
-                      class="block w-full text-sm text-slate-500
-                      file:rounded-full file:border-0
-                      file:text-sm file:font-semibold
-                      file:bg-violet-50 file:text-violet-700
-                      hover:file:bg-violet-100
-                      file:mr-4 file:py-2 file:px-4
-      "
+                      name="image"
+                      onChange={handleImageChange}
+                      class="block w-full text-sm text-slate-500"
                     />
                   </label>
                 </div>
               </div>
             </div>
-            {/* Email */}
+
+            {/* Email - From Context */}
             <div>
-              <label class="text-white dark:text-gray-200" for="emailAddress">
+              <label class="text-white dark:text-gray-200" htmlFor="email">
                 Email Address
               </label>
               <input
-                id="emailAddress"
+                id="email"
                 type="email"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                value={User.email}
+                disabled
+                class="block w-full px-4 py-2 mt-2 text-gray-400 bg-white border border-gray-300 rounded-md"
               />
             </div>
-            {/* Policy */}
-            <div className="text-white text-center">
-              <p>All Information are Secured</p>
-            </div>
-            {/* mobile No */}
+
+            {/* Phone - From Context */}
             <div>
-              <label
-                class="text-white dark:text-gray-200"
-                for="passwordConfirmation"
-              >
+              <label class="text-white dark:text-gray-200" htmlFor="phone">
                 Phone Number
               </label>
               <input
-                id="passwordConfirmation"
-                type="password"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                id="phone"
+                type="tel"
+                value={userPhoneNumber}
+                disabled
+                class="block w-full px-4 py-2 mt-2 text-gray-400 bg-white border border-gray-300 rounded-md"
               />
             </div>
-            {/* Date of Birth */}
+
+            {/* Birth date */}
             <div>
-              <label
-                class="text-white dark:text-gray-200"
-                for="passwordConfirmation"
-              >
+              <label class="text-white dark:text-gray-200" htmlFor="birthDate">
                 Birth date
               </label>
               <input
-                id="date"
+                id="birthDate"
+                name="birthDate"
                 type="date"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                value={formData.birthDate}
+                onChange={handleChange}
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md"
               />
             </div>
-            {/* Date of Birth */}
-            <div className="grid-cols-1">
-              <label
-                class="text-white dark:text-gray-200"
-                for="passwordConfirmation"
-              >
-                Birth date
-              </label>
-              <input
-                id="date"
-                type="date"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-              />
-            </div>
+
             {/* Gender */}
             <div>
-              <label
-                class="text-white dark:text-gray-200"
-                for="passwordConfirmation"
-              >
+              <label class="text-white dark:text-gray-200" htmlFor="gender">
                 Gender
               </label>
-              <select class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+              <select
+                id="gender"
+                name="gender"
+                value={formData.gender}
+                onChange={handleChange}
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md"
+              >
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
             </div>
+
+            {/* Relationship */}
+            <div>
+              <label
+                class="text-white dark:text-gray-200"
+                htmlFor="relationship"
+              >
+                Relationship
+              </label>
+              <select
+                id="relationship"
+                name="relationship"
+                value={formData.relationship}
+                onChange={handleChange}
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md"
+              >
+                <option value="Short Term">Short Term</option>
+                <option value="Long Term">Long Term</option>
+                <option value="Forever">Forever</option>
+              </select>
+            </div>
           </div>
-          {/* Relationship */}
-          <div className="mt-2">
-            <label
-              class="text-white dark:text-gray-200"
-              for="passwordConfirmation"
-            >
-              Relationsip
-            </label>
-            <select class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
-              <option value="Short Term">Short Term</option>
-              <option value="Long Term">Long Term</option>
-              <option value="Forever">Forever</option>
-            </select>
-          </div>
+
           <div class="flex items-center mt-5 text-white">
             <input
-              id="link-checkbox"
+              id="termsAccepted"
+              name="termsAccepted"
               type="checkbox"
-              value=""
-              class="w-4 h-4 rounded "
+              checked={formData.termsAccepted}
+              onChange={handleChange}
+              class="w-4 h-4 rounded"
             />
-            <label for="link-checkbox" class="ms-2 text-sm font-medium ">
+            <label htmlFor="termsAccepted" class="ms-2 text-sm font-medium">
               I agree with the{" "}
               <a
                 href="#"
@@ -171,8 +248,11 @@ function UserForm() {
             </label>
           </div>
 
-          <div class="flex justify-end mt-6 mb-9  w-full">
-            <button class="px-6 w-full py-3 leading-5 font-bold text-white transition-colors duration-200 transform bg-[#FE4654] rounded-md ">
+          <div class="flex justify-end mt-6 mb-11 w-full">
+            <button
+              type="submit"
+              class="px-6 w-full py-3 leading-5 font-bold text-white transition-colors duration-200 transform bg-[#FE4654] rounded-md"
+            >
               Next
             </button>
           </div>
