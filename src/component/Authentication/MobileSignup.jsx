@@ -58,7 +58,7 @@ function MobileSignup() {
             <button
               type="button"
               class="text-right text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5  items-center popup-close"
-              onClick={context.LoginPopup}
+              onClick={context.MobileLoginPopup}
             >
               <svg
                 aria-hidden="true"

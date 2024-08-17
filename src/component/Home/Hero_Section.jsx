@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import Navbar from "./Navbar";
+import Context from "../../context/context";
 
 export default function Hero_Section() {
+  const context = useContext(Context);
   return (
     <div className="bg-black bg-opacity-50">
       <Navbar />
@@ -11,7 +13,10 @@ export default function Hero_Section() {
             Start Something epic.
           </p>
           <div className="w-full text-center mt-3 pt-36 ">
-            <button className="p-3 px-10 md:text-md lg:text-lg font-bold text-white bg-pink-600 rounded-3xl border-[4px] border-white">
+            <button
+              className="p-3 px-10 md:text-md lg:text-lg font-bold text-white bg-pink-600 rounded-3xl border-[4px] border-white"
+              onClick={context.LoginPopup}
+            >
               Crete Account
             </button>
             <br />
