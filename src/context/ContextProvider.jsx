@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Context from "./context";
+import { addDoc, collection, doc, getDocs } from "firebase/firestore";
+import { fireDB } from "../firebase/FirebaseConfig";
 
 export const ContextProvider = (props) => {
   const localMode = localStorage.getItem("mode");
@@ -32,22 +34,14 @@ export const ContextProvider = (props) => {
   const MobileLoginPopup = () => {
     SetisMobileLoginPopup((prev) => !prev);
   };
+  // get email and phone from local storage
+  const user = JSON.parse(localStorage.getItem("User"));
+  const phoneUser = JSON.parse(localStorage.getItem("phone"));
 
   // User Details
-  const [User, SetUser] = useState({
-    firstname: null,
-    lastname: null,
-    imageUrl: null,
-    email: null,
-    phoneNumber: null,
-    DOB: null,
-    gender: null,
-    relationship: null,
-  });
+  const [User, SetUser] = useState(user);
   // UserEmail
-  const emailuser = JSON.parse(localStorage.getItem("User"));
-
-  const [userEmail, SetuserEmail] = useState(emailuser);
+  const [userPhoneNumber, SetuserPhoneNumber] = useState(phoneUser);
 
   // Add new User
   const AddNewUser = async (user) => {
@@ -57,7 +51,7 @@ export const ContextProvider = (props) => {
     const profileref = collection(dbref, "Profile");
     try {
       await addDoc(profileref, { ...user });
-      SetuserEmail({ user: { ...user } });
+      SetUser({ ...user });
       getUserDetails();
       Setloader(false);
     } catch (error) {
@@ -68,7 +62,7 @@ export const ContextProvider = (props) => {
 
   // Get User Data from database
   const getUserDetails = async () => {
-    const Email = userEmail.user.email;
+    const Email = User.email;
 
     const userDocRef = doc(fireDB, "users", Email);
 
@@ -81,7 +75,7 @@ export const ContextProvider = (props) => {
         (doc) =>
           (cartitems = {
             id: doc.id,
-            email: User.user.email,
+            email: User.email,
             ...doc.data(),
           })
       );
@@ -96,6 +90,7 @@ export const ContextProvider = (props) => {
   const context = {
     mode: Mode,
     loader: loader,
+    User: User,
     Setloader: Setloader,
     ToggleMode: ToggleMode,
     isLoginPopup: isLoginPopup,
@@ -103,6 +98,8 @@ export const ContextProvider = (props) => {
     isMobileLoginPopup: isMobileLoginPopup,
     MobileLoginPopup: MobileLoginPopup,
     AddNewUser: AddNewUser,
+    userPhoneNumber: userPhoneNumber,
+    SetuserPhoneNumber: SetuserPhoneNumber,
   };
   return <Context.Provider value={context}>{props.children}</Context.Provider>;
 };
