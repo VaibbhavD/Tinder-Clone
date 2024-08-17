@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState } from "react";
 import Context from "../../context/context";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function MobileSignup() {
@@ -57,8 +57,10 @@ function MobileSignup() {
   // Verify OTP
   const verifyOtp = () => {
     if (Otp === userOtp) {
+      context.SetuserPhoneNumber(phoneNumber);
+      localStorage.setItem("phone", JSON.stringify(phoneNumber));
       alert("OTP Verified Successfully!");
-      toast.success("Verifird Successfully");
+
       navigate("/onboard");
 
       // Proceed with the next steps
