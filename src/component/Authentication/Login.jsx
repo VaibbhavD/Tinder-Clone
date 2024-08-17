@@ -35,6 +35,7 @@ function Login() {
         dispatch(AuthActions.Login(user.email));
         localStorage.setItem("User", JSON.stringify(result.user));
         Setloader(false);
+        MobileLoginPopup();
         // navigate("/"); // Redirect to home or profile page
       } else {
         // User already exists
