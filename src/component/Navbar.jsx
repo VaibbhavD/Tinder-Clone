@@ -9,7 +9,7 @@ import Context from "../context/context";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const context = useContext(Context);
-  const { mode, ToggleMode } = context;
+  const { mode, ToggleMode, LoginPopup } = context;
   return (
     <div className="bg-transparent sticky top-0 z-50 pt-2">
       {/* Mobile menu */}
@@ -296,14 +296,12 @@ export default function Navbar() {
 
                   {/* Login */}
 
-                  <div className="hidden md:block lg:ml-6 lg:mr-5 lg:flex bg-white p-1.5 lg:px-5 px-5 rounded-3xl shadow-sm hover:shadow-pink-300 text-black">
-                    <Link
-                      to={"/login"}
-                      className={`text-lg font-bold cursor-pointer`}
-                    >
-                      Login
-                    </Link>
-                  </div>
+                  <button
+                    className="hidden md:block lg:ml-6 lg:mr-5 lg:flex bg-white cursor-pointer p-1.5 lg:px-5 px-5 rounded-3xl shadow-sm hover:shadow-pink-300 text-black"
+                    onClick={LoginPopup}
+                  >
+                    Login
+                  </button>
                 </div>
               </div>
             </div>
