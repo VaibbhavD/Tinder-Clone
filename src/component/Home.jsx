@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Hero_Section from "./Hero_Section";
 import Testimonal from "./Testimonal";
 import Footer from "./Footer";
@@ -17,7 +17,7 @@ function Home() {
       <Hero_Section />
       <Testimonal />
       <Footer />
-      <Modal isopen={true}>
+      <Modal>
         <Login />
       </Modal>
     </div>
