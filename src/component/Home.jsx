@@ -2,6 +2,8 @@ import React from "react";
 import Hero_Section from "./Hero_Section";
 import Testimonal from "./Testimonal";
 import Footer from "./Footer";
+import Modal from "../component/Modal";
+import Login from "./Login";
 
 function Home() {
   return (
@@ -15,6 +17,9 @@ function Home() {
       <Hero_Section />
       <Testimonal />
       <Footer />
+      <Modal isopen={true}>
+        <Login />
+      </Modal>
     </div>
   );
 }
