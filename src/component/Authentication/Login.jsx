@@ -2,9 +2,56 @@ import React, { useContext } from "react";
 import { BsApple, BsFacebook } from "react-icons/bs";
 import { BiPhoneCall } from "react-icons/bi";
 import Context from "../../context/context";
+import {
+  Auth,
+  fireDB,
+  googleProvider,
+  signInWithPopup,
+} from "../../firebase/FirebaseConfig";
+import { toast } from "react-toastify";
+import Loader from "../Loader/loader";
+import { collection, doc, getDoc } from "firebase/firestore";
+import { useDispatch } from "react-redux";
+import { AuthActions } from "../../redux/AuthSlice";
 
 function Login() {
   const context = useContext(Context);
+  const dispatch = useDispatch();
+  const { AddNewUser, MobileLoginPopup, LoginPopup, loader, Setloader } =
+    context;
+
+  const handleGoogleSignUp = async () => {
+    Setloader(true);
+    try {
+      const result = await signInWithPopup(Auth, googleProvider);
+      const user = result.user;
+      console.log(user);
+
+      // Check if the user already exists in Firestore
+      const userRef = collection(fireDB, "Users");
+      const userDoc = await getDoc(doc(userRef, user.uid));
+
+      if (!userDoc.exists()) {
+        dispatch(AuthActions.Login(user.email));
+        localStorage.setItem("User", JSON.stringify(result.user));
+        Setloader(false);
+        // navigate("/"); // Redirect to home or profile page
+      } else {
+        // User already exists
+        toast.error("User already exists. Please sign in.");
+        // await Auth.signOut(); // Sign out the user to clear the state
+        console.log("Error");
+        Setloader(false);
+      }
+    } catch (error) {
+      toast.error(error.message);
+      Setloader(false);
+    } finally {
+      toast.success("hi");
+      LoginPopup();
+      Setloader(false);
+    }
+  };
 
   return (
     <div class="relative p-4 w-screen max-w-md h-full md:h-auto">
@@ -12,7 +59,7 @@ function Login() {
         <button
           type="button"
           class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center popup-close"
-          onClick={context.LoginPopup}
+          onClick={LoginPopup}
         >
           <svg
             aria-hidden="true"
@@ -63,7 +110,10 @@ function Login() {
           {/* Auth Ways */}
 
           <div class="mt-7 flex flex-col gap-2 px-4">
-            <button class="text-lg inline-flex h-10 w-full items-center justify-center gap-2 rounded-3xl border border-gray-700  bg-b p-2 hover:bg-gray-800  font-medium text-white  disabled:cursor-not-allowed disabled:opacity-60">
+            <button
+              class="text-lg inline-flex h-10 w-full items-center justify-center gap-2 rounded-3xl border border-gray-700  bg-b p-2 hover:bg-gray-800  font-medium text-white  disabled:cursor-not-allowed disabled:opacity-60"
+              onClick={handleGoogleSignUp}
+            >
               <img
                 src="https://www.svgrepo.com/show/475656/google-color.svg"
                 alt="Google"
@@ -82,8 +132,8 @@ function Login() {
             <button
               class="text-lg inline-flex h-10 w-full items-center justify-center gap-2 rounded-3xl border border-gray-700  bg-b p-2 hover:bg-gray-800  font-medium text-white  disabled:cursor-not-allowed disabled:opacity-60"
               onClick={() => {
-                context.MobileLoginPopup();
-                context.LoginPopup();
+                MobileLoginPopup();
+                LoginPopup();
               }}
             >
               <span class="h-[18px] w-[18px]">
@@ -93,8 +143,9 @@ function Login() {
             </button>
           </div>
 
-          <div class="text-center w-full py-5 text-lg font-bold text-white font-serif">
-            Get the app !
+          <div class="text-center flex justify-center w-full py-5 text-lg font-bold text-white font-serif">
+            {!loader && <>Get the app !</>}
+            {loader && <Loader />}
           </div>
 
           {/* Play store Button */}
