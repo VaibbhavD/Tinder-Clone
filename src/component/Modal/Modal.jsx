@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useContext } from "react";
-import Context from "../context/context";
+import Context from "../../context/context";
 import React from "react";
 
 export default function Modal(props) {

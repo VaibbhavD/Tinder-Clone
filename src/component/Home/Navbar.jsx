@@ -4,7 +4,7 @@ import { RxCross2 } from "react-icons/rx";
 import { NavLink, Link } from "react-router-dom";
 import { BsFillCloudSunFill } from "react-icons/bs";
 import { FiSun } from "react-icons/fi";
-import Context from "../context/context";
+import Context from "../../context/context";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);

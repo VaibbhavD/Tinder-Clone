@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { BsApple, BsFacebook } from "react-icons/bs";
 import { BiPhoneCall } from "react-icons/bi";
-import Context from "../context/context";
+import Context from "../../context/context";
 
 function Login() {
   const context = useContext(Context);

@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import Hero_Section from "./Hero_Section";
-import Testimonal from "./Testimonal";
+import Testimonal from "../Testimonal/Testimonal";
 import Footer from "./Footer";
-import Modal from "../component/Modal";
-import Login from "./Login";
+import Modal from "../Modal/Modal";
+import Login from "../Authentication/Login";
 
 function Home() {
   return (
