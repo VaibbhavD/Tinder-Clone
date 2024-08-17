@@ -6,6 +6,7 @@ export const ContextProvider = (props) => {
 
   const [Mode, SetMode] = useState(localMode);
   const [isLoginPopup, SetisLoginPopup] = useState(false);
+  const [isMobileLoginPopup, SetisMobileLoginPopup] = useState(false);
 
   const ToggleMode = () => {
     if (Mode === "white") {
@@ -23,11 +24,17 @@ export const ContextProvider = (props) => {
     SetisLoginPopup((prev) => !prev);
   };
 
+  const MobileLoginPopup = () => {
+    SetisMobileLoginPopup((prev) => !prev);
+  };
+
   const context = {
     mode: Mode,
     ToggleMode: ToggleMode,
     isLoginPopup: isLoginPopup,
     LoginPopup: LoginPopup,
+    isMobileLoginPopup: isMobileLoginPopup,
+    MobileLoginPopup: MobileLoginPopup,
   };
   return <Context.Provider value={context}>{props.children}</Context.Provider>;
 };
