@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BsApple, BsFacebook } from "react-icons/bs";
-
 import { BiPhoneCall } from "react-icons/bi";
+import Context from "../context/context";
 
 function Login() {
+  const context = useContext(Context);
+
   return (
     <div class="relative p-4 w-screen max-w-md h-full md:h-auto">
       <div class="relative bg-[#111418] rounded-lg shadow">
         <button
           type="button"
           class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center popup-close"
+          onClick={context.LoginPopup}
         >
           <svg
             aria-hidden="true"
