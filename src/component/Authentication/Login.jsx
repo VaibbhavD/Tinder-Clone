@@ -79,7 +79,13 @@ function Login() {
               Log in with GitHub
             </button>
 
-            <button class="text-lg inline-flex h-10 w-full items-center justify-center gap-2 rounded-3xl border border-gray-700  bg-b p-2 hover:bg-gray-800  font-medium text-white  disabled:cursor-not-allowed disabled:opacity-60">
+            <button
+              class="text-lg inline-flex h-10 w-full items-center justify-center gap-2 rounded-3xl border border-gray-700  bg-b p-2 hover:bg-gray-800  font-medium text-white  disabled:cursor-not-allowed disabled:opacity-60"
+              onClick={() => {
+                context.MobileLoginPopup();
+                context.LoginPopup();
+              }}
+            >
               <span class="h-[18px] w-[18px]">
                 <BiPhoneCall className="text-blue-600" />
               </span>
