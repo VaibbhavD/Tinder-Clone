@@ -1,13 +1,11 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useContext } from "react";
-import Context from "../../context/context";
+import { Fragment } from "react";
 import React from "react";
 
 export default function Modal(props) {
-  const context = useContext(Context);
   return (
     <>
-      <Transition appear show={context.isLoginPopup} as={Fragment}>
+      <Transition appear show={props.isshown} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10 bg-opacity-50 "
