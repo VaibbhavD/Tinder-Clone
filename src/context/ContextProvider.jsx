@@ -100,6 +100,7 @@ export const ContextProvider = (props) => {
     AddNewUser: AddNewUser,
     userPhoneNumber: userPhoneNumber,
     SetuserPhoneNumber: SetuserPhoneNumber,
+    getUserDetails: getUserDetails,
   };
   return <Context.Provider value={context}>{props.children}</Context.Provider>;
 };
