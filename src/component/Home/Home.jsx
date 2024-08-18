@@ -14,7 +14,7 @@ function Home() {
       className="w-full min-h-screen lg:bg-contain bg-fixed"
       style={{
         backgroundImage:
-          "url('https://plugins-media.makeupar.com/smb/blog/post/2022-08-05/c414b386-9e1e-41c5-b87e-c930c41f34ed.jpg')",
+          "url('https://i.pinimg.com/originals/16/f7/f1/16f7f147c3a048bd8dde2774315d4b39.png')",
       }}
     >
       <Hero_Section />
