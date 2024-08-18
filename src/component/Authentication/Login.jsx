@@ -13,12 +13,13 @@ import Loader from "../Loader/loader";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { AuthActions } from "../../redux/AuthSlice";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const context = useContext(Context);
   const dispatch = useDispatch();
-  const { AddNewUser, MobileLoginPopup, LoginPopup, loader, Setloader } =
-    context;
+  const navigate = useNavigate();
+  const { SetUser, MobileLoginPopup, LoginPopup, loader, Setloader } = context;
 
   const handleGoogleSignUp = async () => {
     Setloader(true);
@@ -34,11 +35,12 @@ function Login() {
       if (!userDoc.exists()) {
         dispatch(AuthActions.Login(user.email));
         localStorage.setItem("User", JSON.stringify(result.user));
+        SetUser(user);
         Setloader(false);
         MobileLoginPopup();
         // navigate("/"); // Redirect to home or profile page
       } else {
-        // await Auth.signOut(); // Sign out the user to clear the state
+        navigate("/dashboard");
         console.log("Error");
         Setloader(false);
       }
