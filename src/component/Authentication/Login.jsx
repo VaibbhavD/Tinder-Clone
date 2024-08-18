@@ -34,33 +34,25 @@ function Login() {
     try {
       const result = await signInWithPopup(Auth, googleProvider);
       const user = result.user;
-      console.log(user);
-
       // Reference to the user's document in Firestore
       const userRef = doc(fireDB, "Users", user.email);
+      console.log(user.email);
 
       // Check if the user already exists in Firestore
       const userDoc = await getDoc(userRef);
 
       if (!userDoc.exists()) {
         // User does not exist, proceed with sign-up
-        await setDoc(userRef, {
-          email: user.email /* Add any additional user info here */,
-        });
-
-        // Dispatch login action and save user data
-        dispatch(AuthActions.Login(user.email));
-        localStorage.setItem("User", JSON.stringify(result.user));
+        console.log("not");
         SetUser(user);
         MobileLoginPopup();
-        // Optionally navigate to a different page if needed
-        // navigate("/create"); // Redirect to create page or another page as needed
       } else {
+        console.log("yes");
         // User exists, proceed with login
         // Dispatch login action and save user data
-        dispatch(AuthActions.Login(user.email));
-        localStorage.setItem("User", JSON.stringify(result.user));
         SetUser(user);
+        localStorage.setItem("User", JSON.stringify(result.user));
+        dispatch(AuthActions.Login(user.email));
         getUserDetails();
         navigate("/dashboard"); // Redirect to the dashboard or appropriate page
         console.log("User already exists");
