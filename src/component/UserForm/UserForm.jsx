@@ -37,10 +37,19 @@ function UserForm() {
   // Handle image change
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+
     if (file) {
+      // Clean up the previous blob URL if it exists
+      if (formData.image) {
+        URL.revokeObjectURL(formData.image);
+      }
+
+      // Create a new blob URL and set it in the formData
+      const newImageUrl = URL.createObjectURL(file);
+
       setFormData({
         ...formData,
-        image: URL.createObjectURL(file),
+        image: newImageUrl, // Set the blob URL in the formData
       });
     }
   };
@@ -117,6 +126,7 @@ function UserForm() {
                 value={formData.firstName}
                 onChange={handleChange}
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md"
+                required
               />
 
               <div className="mt-4">
@@ -133,6 +143,7 @@ function UserForm() {
                   value={formData.lastName}
                   onChange={handleChange}
                   className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md"
+                  required
                 />
               </div>
             </div>
@@ -159,6 +170,7 @@ function UserForm() {
                       name="image"
                       onChange={handleImageChange}
                       className="block w-full text-sm text-slate-500"
+                      required
                     />
                   </label>
                 </div>
@@ -177,6 +189,7 @@ function UserForm() {
                 disabled={!!User?.email} // Disable email if it's already populated from User context
                 onChange={handleEmailChange} // Handle email change separately
                 className="block w-full px-4 py-2 mt-2 text-gray-400 bg-white border border-gray-300 rounded-md"
+                required
               />
             </div>
 
@@ -191,6 +204,7 @@ function UserForm() {
                 value={userPhoneNumber}
                 disabled
                 className="block w-full px-4 py-2 mt-2 text-gray-400 bg-white border border-gray-300 rounded-md"
+                required
               />
             </div>
 
@@ -209,6 +223,7 @@ function UserForm() {
                 value={formData.birthDate}
                 onChange={handleChange}
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md"
+                required
               />
             </div>
 
@@ -223,6 +238,7 @@ function UserForm() {
                 value={formData.gender}
                 onChange={handleChange}
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md"
+                required
               >
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -243,6 +259,7 @@ function UserForm() {
                 value={formData.relationship}
                 onChange={handleChange}
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md"
+                required
               >
                 <option value="Short Term">Short Term</option>
                 <option value="Long Term">Long Term</option>
