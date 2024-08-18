@@ -281,23 +281,10 @@ export default function Navbar() {
 
                 {/* Dark Mode */}
                 <div className="w-full flex  justify-end gap-5 lg:gap-0">
-                  <div className="flex mr-0 ml-2 lg:ml-6">
-                    <button className="" onClick={ToggleMode}>
-                      {/* <MdDarkMode size={35} style={{ color: mode === 'dark' ? 'white' : '' }} /> */}
-                      {mode === "light" ? (
-                        <FiSun className="" size={30} />
-                      ) : "dark" ? (
-                        <BsFillCloudSunFill size={30} />
-                      ) : (
-                        ""
-                      )}
-                    </button>
-                  </div>
-
                   {/* Login */}
 
                   <button
-                    className="hidden md:block lg:ml-6 lg:mr-5 lg:flex bg-white cursor-pointer p-1.5 lg:px-5 px-5 rounded-3xl shadow-sm hover:shadow-pink-300 text-black"
+                    className="hidden md:block font-bold text-xl lg:ml-6 lg:mr-5 lg:flex bg-white cursor-pointer p-1.5 lg:px-5 px-5 rounded-3xl shadow-sm hover:shadow-pink-300 text-black"
                     onClick={LoginPopup}
                   >
                     Login
