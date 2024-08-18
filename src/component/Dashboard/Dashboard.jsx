@@ -7,6 +7,11 @@ import ErrorPage from "./ErrorPage";
 import { BiLogOut } from "react-icons/bi";
 import UserCard from "../User/UserCard";
 import UserProfile from "../User/UserProfile";
+import { AuthActions } from "../../redux/AuthSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Context from "../../context/context";
+import { useContext } from "react";
 
 function Dashboard() {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
@@ -15,6 +20,10 @@ function Dashboard() {
   const [location, setLocation] = useState({ latitude: null, longitude: null });
   const [locationName, setLocationName] = useState("");
   const [isUserProfile, setisUserProfile] = useState(false);
+
+  const context = useContext(Context);
+  const { image, firstName, lastName } = context.User;
+  console.log(image, firstName);
 
   const toggleSideMenu = () => setIsSideMenuOpen(!isSideMenuOpen);
   const toggleProfileMenu = () => setIsProfileMenuOpen(!isProfileMenuOpen);
@@ -57,6 +66,16 @@ function Dashboard() {
     }
   }, []);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const Logout = () => {
+    localStorage.removeItem("User");
+    localStorage.removeItem("phone");
+    dispatch(AuthActions.Logout());
+    navigate("/");
+  };
+
   return (
     <>
       <div className={`flex h-screen bg-[#111418]`}>
@@ -81,10 +100,14 @@ function Dashboard() {
             <div className="flex justify-center mt-10">
               <img
                 className="hidden h-24 w-24 rounded-full sm:block object-cover mr-2 border-4 border-[#FE4654]"
-                src="https://image.flaticon.com/icons/png/512/149/149071.png"
+                src={image}
                 alt="Avatar"
+                loading="lazy"
               />
             </div>
+            <p className="text-center font-bold text-lg">
+              {firstName + " " + lastName}
+            </p>
 
             {/* Search bar */}
             <div className="flex justify-center mt-10">
@@ -125,7 +148,10 @@ function Dashboard() {
                 <CiSettings />
                 <span class="mx-4 font-medium">Setting</span>
               </span>
-              <span class="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md">
+              <span
+                onClick={Logout}
+                class="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md"
+              >
                 <BiLogOut className="text-red-500" />
                 <span class="mx-4 font-medium">Logout</span>
               </span>
