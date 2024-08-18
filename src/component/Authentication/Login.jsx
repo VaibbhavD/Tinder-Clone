@@ -20,7 +20,14 @@ function Login() {
   const context = useContext(Context);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { SetUser, MobileLoginPopup, LoginPopup, loader, Setloader } = context;
+  const {
+    SetUser,
+    MobileLoginPopup,
+    LoginPopup,
+    loader,
+    Setloader,
+    getUserDetails,
+  } = context;
 
   const handleGoogleSignUp = async () => {
     Setloader(true);
@@ -54,6 +61,7 @@ function Login() {
         dispatch(AuthActions.Login(user.email));
         localStorage.setItem("User", JSON.stringify(result.user));
         SetUser(user);
+        getUserDetails();
         navigate("/dashboard"); // Redirect to the dashboard or appropriate page
         console.log("User already exists");
       }
