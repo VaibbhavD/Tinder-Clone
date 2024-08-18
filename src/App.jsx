@@ -5,20 +5,30 @@ import UserForm from "./component/UserForm/UserForm";
 import { ToastContainer } from "react-toastify";
 import Dashboard from "./component/Dashboard/Dashboard";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { AuthActions } from "./redux/AuthSlice";
 import "./App.css";
+import { useEffect } from "react";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.authUser.isLoggedin);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("User"));
+    if (user) {
+      dispatch(AuthActions.Login(user));
+    }
+  }, []);
 
   return (
     <ContextProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="*" element={<Home />} />
+          {!isLoggedIn && <Route path="/" element={<Home />} />}
+          {!isLoggedIn && <Route path="*" element={<Home />} />}
           {isLoggedIn && <Route path="/dashboard" element={<Dashboard />} />}
           <Route path="/onboard" element={<UserForm />} />
-          {isLoggedIn && <Route path="/*" element={<Dashboard />} />}
+          {isLoggedIn && <Route path="*" element={<Dashboard />} />}
         </Routes>
         <ToastContainer />
       </Router>
