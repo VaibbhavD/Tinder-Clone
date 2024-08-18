@@ -1,7 +1,8 @@
 import React, { useContext, useRef, useState } from "react";
 import Context from "../../context/context";
-import { json, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { AuthActions } from "../../redux/AuthSlice";
+import { useDispatch } from "react-redux";
 
 function MobileSignup() {
   // Country Codes
@@ -21,6 +22,7 @@ function MobileSignup() {
   const [userOtp, setUserOtp] = useState(""); // User input OTP
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // Create refs for each input field
   const inputRefs = useRef([]);
@@ -57,11 +59,11 @@ function MobileSignup() {
   // Verify OTP
   const verifyOtp = () => {
     if (Otp === userOtp) {
+      dispatch(AuthActions.Login(Otp));
       context.SetuserPhoneNumber(phoneNumber);
       localStorage.setItem("phone", JSON.stringify(phoneNumber));
-      alert("OTP Verified Successfully!");
-
       navigate("/onboard");
+      alert("OTP Verified Successfully!");
 
       // Proceed with the next steps
     } else {
