@@ -129,6 +129,7 @@ function Dashboard() {
             </div>
 
             {/* Sidebar data */}
+
             <div className="flex-nowrap justify-end w-full mt-6">
               <span
                 onClick={() => setisUserProfile(true)}
@@ -173,11 +174,49 @@ function Dashboard() {
           }`}
         >
           {/* Mobile Sidebar content */}
+          <div className="flex justify-center mt-10">
+            <img
+              className=" h-40 w-40 rounded-full sm:block object-cover mr-2 border-4 border-[#FE4654]"
+              src={image}
+              alt="Avatar"
+              loading="lazy"
+            />
+          </div>
+          <p className="text-center font-bold text-lg text-orange-500">
+            {firstName + " " + lastName}
+          </p>
+          <div className="flex-nowrap justify-end w-full mt-6">
+            <span
+              onClick={() => setisUserProfile(true)}
+              class="flex items-center px-4 py-2 mt-3 cursor-pointer hover:border-white text-white border-2 border-gray-600 rounded-md"
+            >
+              <CgProfile />
+              <span class="mx-4 font-medium">Profile</span>
+            </span>
+            <span
+              onClick={() => setisUserProfile(false)}
+              class="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md"
+            >
+              <MdExplore />
+              <span class="mx-4 font-medium">Explore</span>
+            </span>
+            <span class="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md">
+              <CiSettings />
+              <span class="mx-4 font-medium">Setting</span>
+            </span>
+            <span
+              onClick={Logout}
+              class="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md"
+            >
+              <BiLogOut className="text-red-500" />
+              <span class="mx-4 font-medium">Logout</span>
+            </span>
+          </div>
         </aside>
 
         {/* Main content */}
         <div className="flex-1 overflow-y-auto bg-[#111418] md:pt-14">
-          <header className="flex items-center justify-between bg-gray-800 text-white">
+          <header className="flex items-center justify-between bg-[#111418] text-white">
             <button
               className="text-white focus:outline-none md:hidden"
               aria-label="Toggle sidebar menu"
@@ -202,7 +241,7 @@ function Dashboard() {
               <button
                 className="relative text-3xl focus:outline-none"
                 aria-label="Profile menu"
-                onClick={toggleProfileMenu}
+                onClick={() => setisUserProfile(true)}
               >
                 <CgProfile />
               </button>
