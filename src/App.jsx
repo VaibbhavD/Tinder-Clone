@@ -16,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           {isLoggedIn && <Route path="/dashboard" element={<Dashboard />} />}
+          {isLoggedIn && <Route path="/onboard" element={<UserForm />} />}
         </Routes>
         <ToastContainer />
       </Router>
