@@ -9,7 +9,7 @@ export default function Hero_Section() {
       <Navbar />
       <div className="min-h-screen min-w-screen flex justify-center items-center ">
         <div className="">
-          <p className="lg:text-8xl md:text-6xl text-4xl z-50 text-white font-bold ">
+          <p className="lg:text-8xl md:text-6xl text-4xl z-50 text-white font-extrabold ">
             Start Something epic.
           </p>
           <div className="w-full text-center mt-3 pt-36 ">
@@ -20,7 +20,10 @@ export default function Hero_Section() {
               Crete Account
             </button>
             <br />
-            <button className="md:hidden mt-3 p-3 px-16 md:text-md lg:text-lg font-bold text-white bg-transparent rounded-3xl border-[4px] border-white">
+            <button
+              onClick={context.LoginPopup}
+              className="md:hidden mt-3 p-3 px-16 md:text-md lg:text-lg font-bold text-white bg-transparent rounded-3xl border-[4px] border-white"
+            >
               Log In
             </button>
           </div>
