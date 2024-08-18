@@ -1,8 +1,10 @@
 import React, { useState, useContext } from "react";
 import Context from "../../context/context";
+import { useNavigate } from "react-router-dom";
 
 function UserForm() {
   const { User, userPhoneNumber, AddNewUser } = useContext(Context); // Get email and phone from context
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -51,6 +53,7 @@ function UserForm() {
   const addNewUser = (user) => {
     console.log("New user added:", user);
     AddNewUser(user);
+    navigate("/dashboard");
     // Add logic to store the user data (e.g., API call or Firebase)
   };
 
