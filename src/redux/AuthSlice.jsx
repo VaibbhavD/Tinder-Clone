@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = { isLoggedin: false };
-const User = JSON.parse(localStorage.getItem("User"));
-if (User) {
+const user = JSON.parse(localStorage.getItem("User"));
+if (user) {
   initialState.isLoggedin = true;
 }
 const AuthSlice = createSlice({
