@@ -7,6 +7,7 @@ import {
   fireDB,
   googleProvider,
   signInWithPopup,
+  facebookProvider,
 } from "../../firebase/FirebaseConfig";
 import { toast } from "react-toastify";
 import Loader from "../Loader/loader";
@@ -49,6 +50,18 @@ function Login() {
     } finally {
       LoginPopup();
       Setloader(false);
+    }
+  };
+
+  const handleFacebookSignUp = async () => {
+    Setloader(true);
+    try {
+      const result = await signInWithPopup(Auth, facebookProvider);
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+      Setloader(false);
+    } finally {
     }
   };
 
@@ -121,11 +134,14 @@ function Login() {
               Log in with Google
             </button>
 
-            <button class="text-lg inline-flex h-10 w-full items-center justify-center gap-2 rounded-3xl border border-gray-700  bg-b p-2 hover:bg-gray-800 font-medium text-white  disabled:cursor-not-allowed disabled:opacity-60">
+            <button
+              onClick={handleFacebookSignUp}
+              class="text-lg inline-flex h-10 w-full items-center justify-center gap-2 rounded-3xl border border-gray-700  bg-b p-2 hover:bg-gray-800 font-medium text-white  disabled:cursor-not-allowed disabled:opacity-60"
+            >
               <span class="h-[18px] w-[18px]">
                 <BsFacebook className="text-blue-600" />
               </span>
-              Log in with GitHub
+              Log in with Facebook
             </button>
 
             <button
