@@ -46,15 +46,16 @@ export const ContextProvider = (props) => {
   // Add new User
   const AddNewUser = async (user) => {
     Setloader(true);
-    const dbref = doc(fireDB, "users", user.email);
-    const profileref = collection(dbref, "Profile");
+    const userRef = doc(fireDB, "Users", user.email); // Corrected document reference
+    const profileRef = collection(userRef, "Profile");
     try {
-      await addDoc(profileref, { ...user });
+      // Add a new document in the 'Profile' subcollection
+      await addDoc(profileRef, { ...user });
       SetUser({ ...user });
       getUserDetails();
-      Setloader(false);
     } catch (error) {
       console.log(error);
+    } finally {
       Setloader(false);
     }
   };
@@ -63,25 +64,24 @@ export const ContextProvider = (props) => {
   const getUserDetails = async () => {
     const Email = User.email;
 
-    const userDocRef = doc(fireDB, "users", Email);
-
-    const Profileref = collection(userDocRef, "Profile");
+    const userDocRef = doc(fireDB, "Users", Email); // Corrected document reference
+    const profileRef = collection(userDocRef, "Profile");
     try {
-      const querysnap = await getDocs(Profileref);
-      console.log(querysnap);
-      let cartitems = {};
-      querysnap.docs.map(
-        (doc) =>
-          (cartitems = {
-            id: doc.id,
-            email: User.email,
-            ...doc.data(),
-          })
-      );
-      console.log(cartitems);
-      SetUser(cartitems);
+      const querySnap = await getDocs(profileRef);
+      console.log(querySnap);
+
+      let cartItems = {};
+      querySnap.docs.forEach((doc) => {
+        cartItems = {
+          id: doc.id,
+          email: Email,
+          ...doc.data(),
+        };
+      });
+
+      console.log(cartItems);
+      SetUser(cartItems);
     } catch (error) {
-      // toast.error(error.message);
       console.log(error);
     }
   };
