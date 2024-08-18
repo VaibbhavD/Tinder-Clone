@@ -4,7 +4,7 @@ import { CiLocationOn } from "react-icons/ci";
 
 function ErrorPage() {
   return (
-    <div className=" w-full h-full text-center content-center">
+    <div className=" w-full bg-white h-screen text-center content-center">
       <div className="flex justify-center text-7xl">
         <CiLocationOn />
       </div>
