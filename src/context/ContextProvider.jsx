@@ -6,83 +6,85 @@ import { fireDB } from "../firebase/FirebaseConfig";
 export const ContextProvider = (props) => {
   const localMode = localStorage.getItem("mode");
 
-  const [Mode, SetMode] = useState(localMode);
+  const [Mode, SetMode] = useState(localMode || "white");
   const [isLoginPopup, SetisLoginPopup] = useState(false);
   const [isMobileLoginPopup, SetisMobileLoginPopup] = useState(false);
 
-  // Loader
+  // Loader state
   const [loader, Setloader] = useState(false);
 
   // Dark Mode Toggle
-
   const ToggleMode = () => {
     if (Mode === "white") {
       SetMode("dark");
       localStorage.setItem("mode", "dark");
-      document.body.style.backgroundColor = "White";
+      document.body.style.backgroundColor = "rgb(17,24,39)"; // Corrected background color
     } else {
       SetMode("white");
       localStorage.setItem("mode", "white");
-      document.body.style.backgroundColor = "rcb (17,24,39)";
+      document.body.style.backgroundColor = "White";
     }
   };
+
   // Login Popup function
   const LoginPopup = () => {
     SetisLoginPopup((prev) => !prev);
   };
+
   // Mobile Login Popup
   const MobileLoginPopup = () => {
     SetisMobileLoginPopup((prev) => !prev);
   };
-  // get email and phone from local storage
-  const user = JSON.parse(localStorage.getItem("User"));
+
+  // Get user details from localStorage
+  const user = JSON.parse(localStorage.getItem("Users"));
   const phoneUser = JSON.parse(localStorage.getItem("phone"));
 
-  // User Details
+  // User State
   const [User, SetUser] = useState(user);
-  // UserEmail
   const [userPhoneNumber, SetuserPhoneNumber] = useState(phoneUser);
 
-  // Add new User
+  // Add new user to Firestore
   const AddNewUser = async (user) => {
     Setloader(true);
+    // Handle special characters in email
     const userRef = doc(fireDB, "Users", user.email); // Corrected document reference
     const profileRef = collection(userRef, "Profile");
+
     try {
       // Add a new document in the 'Profile' subcollection
       await addDoc(profileRef, { ...user });
+      localStorage.setItem("Users", JSON.stringify(user));
       SetUser({ ...user });
-      getUserDetails();
+      getUserDetails(user.email); // Fetch user details after adding
     } catch (error) {
-      console.log(error);
+      console.error("Error adding user:", error);
     } finally {
       Setloader(false);
     }
   };
 
-  // Get User Data from database
-  const getUserDetails = async () => {
-    const Email = User.email;
-
+  // Get User Details from Firestore
+  const getUserDetails = async (Email) => {
     const userDocRef = doc(fireDB, "Users", Email); // Corrected document reference
     const profileRef = collection(userDocRef, "Profile");
+
     try {
       const querySnap = await getDocs(profileRef);
-      console.log(querySnap);
+      console.log("User data fetched:", querySnap);
 
-      let cartItems = {};
+      let userData = {};
       querySnap.docs.forEach((doc) => {
-        cartItems = {
+        userData = {
           id: doc.id,
           email: Email,
           ...doc.data(),
         };
       });
-
-      console.log(cartItems);
-      SetUser(cartItems);
+      localStorage.setItem("Users", JSON.stringify(userData));
+      SetUser(userData);
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching user details:", error);
     }
   };
 
@@ -102,5 +104,6 @@ export const ContextProvider = (props) => {
     SetuserPhoneNumber: SetuserPhoneNumber,
     getUserDetails: getUserDetails,
   };
+
   return <Context.Provider value={context}>{props.children}</Context.Provider>;
 };

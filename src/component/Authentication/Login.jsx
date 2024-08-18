@@ -34,31 +34,21 @@ function Login() {
     try {
       const result = await signInWithPopup(Auth, googleProvider);
       const user = result.user;
-      // Reference to the user's document in Firestore
       const userRef = doc(fireDB, "Users", user.email);
-      console.log(user.email);
 
-      // Check if the user already exists in Firestore
       const userDoc = await getDoc(userRef);
-
       if (!userDoc.exists()) {
-        // User does not exist, proceed with sign-up
-        console.log("not");
         SetUser(user);
         MobileLoginPopup();
       } else {
-        console.log("yes");
-        // User exists, proceed with login
-        // Dispatch login action and save user data
         SetUser(user);
-        localStorage.setItem("User", JSON.stringify(result.user));
+        await getUserDetails(user.email);
         dispatch(AuthActions.Login(user.email));
-        getUserDetails();
-        navigate("/dashboard"); // Redirect to the dashboard or appropriate page
-        console.log("User already exists");
+        navigate("/dashboard");
       }
     } catch (error) {
       console.error("Error during Google sign-up:", error);
+      toast.error("Failed to sign in with Google. Please try again.");
     } finally {
       LoginPopup();
       Setloader(false);
@@ -69,59 +59,72 @@ function Login() {
     Setloader(true);
     try {
       const result = await signInWithPopup(Auth, facebookProvider);
-      console.log(result);
+      const user = result.user;
+      const userRef = doc(fireDB, "Users", user.email);
+
+      const userDoc = await getDoc(userRef);
+      if (!userDoc.exists()) {
+        SetUser(user);
+        MobileLoginPopup();
+      } else {
+        SetUser(user);
+        await getUserDetails(user.email);
+        dispatch(AuthActions.Login(user.email));
+        navigate("/dashboard");
+      }
     } catch (error) {
-      console.log(error);
-      Setloader(false);
+      console.error("Error during Facebook sign-up:", error);
+      toast.error("Failed to sign in with Facebook. Please try again.");
     } finally {
+      LoginPopup();
+      Setloader(false);
     }
   };
 
   return (
-    <div class="relative p-4 w-screen max-w-md h-full md:h-auto">
-      <div class="relative bg-[#111418] rounded-lg shadow">
+    <div className="relative p-4 w-screen max-w-md h-full md:h-auto">
+      <div className="relative bg-[#111418] rounded-lg shadow">
         <button
           type="button"
-          class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center popup-close"
+          className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
           onClick={LoginPopup}
+          aria-label="Close login popup"
         >
           <svg
             aria-hidden="true"
-            class="w-5 h-5"
+            className="w-5 h-5"
             fill="#c6c7c7"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
+              fillRule="evenodd"
               d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-              cliprule="evenodd"
+              clipRule="evenodd"
             ></path>
           </svg>
-          <span class="sr-only">Close popup</span>
+          <span className="sr-only">Close popup</span>
         </button>
 
-        <div class="p-5">
-          <h3 class="text-2xl mb-0.5 font-medium"></h3>
-          <p class="mb-4 text-sm font-normal text-gray-800"></p>
-
-          <div class="text-center">
-            <div class="mb-3 text-3xl font-semibold leading-5 text-white text-center">
+        <div className="p-5">
+          <div className="text-center">
+            <div className="mb-3 text-3xl font-semibold leading-5 text-white text-center">
               <img
                 src="https://pnghq.com/wp-content/uploads/tinder-logo-png-free-png-images-download-20137-2048x1152.png"
                 width={100}
                 height={100}
                 loading="lazy"
                 className="pt-2 m-auto pb-4"
+                alt="Logo"
               />
               <p>Get Started</p>
             </div>
-            <p class="mt-2 text-sm leading-4 text-white px-6">
+            <p className="mt-2 text-sm leading-4 text-white px-6">
               By tapping Log in or Continue. you agree to our{" "}
               <span className="text-blue-500 font-bold underline">Terms</span>.
-              Learn how we process you data in our{" "}
+              Learn how we process your data in our{" "}
               <span className="text-blue-500 font-bold underline">
-                Privacy Policy{" "}
+                Privacy Policy
               </span>{" "}
               and{" "}
               <span className="text-blue-500 font-bold underline">
@@ -131,74 +134,62 @@ function Login() {
             </p>
           </div>
 
-          {/* Auth Ways */}
-
-          <div class="mt-7 flex flex-col gap-2 px-4">
+          <div className="mt-7 flex flex-col gap-2 px-4">
             <button
-              class="text-lg inline-flex h-10 w-full items-center justify-center gap-2 rounded-3xl border border-gray-700  bg-b p-2 hover:bg-gray-800  font-medium text-white  disabled:cursor-not-allowed disabled:opacity-60"
+              className="text-lg inline-flex h-10 w-full items-center justify-center gap-2 rounded-3xl border border-gray-700 bg-b p-2 hover:bg-gray-800 font-medium text-white"
               onClick={handleGoogleSignUp}
             >
               <img
                 src="https://www.svgrepo.com/show/475656/google-color.svg"
                 alt="Google"
-                class="h-[18px] w-[18px] "
+                className="h-[18px] w-[18px]"
               />
               Log in with Google
             </button>
 
             <button
               onClick={handleFacebookSignUp}
-              class="text-lg inline-flex h-10 w-full items-center justify-center gap-2 rounded-3xl border border-gray-700  bg-b p-2 hover:bg-gray-800 font-medium text-white  disabled:cursor-not-allowed disabled:opacity-60"
+              className="text-lg inline-flex h-10 w-full items-center justify-center gap-2 rounded-3xl border border-gray-700 bg-b p-2 hover:bg-gray-800 font-medium text-white"
             >
-              <span class="h-[18px] w-[18px]">
-                <BsFacebook className="text-blue-600" />
-              </span>
+              <BsFacebook className="text-blue-600 h-[18px] w-[18px]" />
               Log in with Facebook
             </button>
 
             <button
-              class="text-lg inline-flex h-10 w-full items-center justify-center gap-2 rounded-3xl border border-gray-700  bg-b p-2 hover:bg-gray-800  font-medium text-white  disabled:cursor-not-allowed disabled:opacity-60"
+              className="text-lg inline-flex h-10 w-full items-center justify-center gap-2 rounded-3xl border border-gray-700 bg-b p-2 hover:bg-gray-800 font-medium text-white"
               onClick={() => {
                 MobileLoginPopup();
                 LoginPopup();
               }}
             >
-              <span class="h-[18px] w-[18px]">
-                <BiPhoneCall className="text-blue-600" />
-              </span>
+              <BiPhoneCall className="text-blue-600 h-[18px] w-[18px]" />
               Log in with phone number
             </button>
           </div>
 
-          <div class="text-center flex justify-center w-full py-5 text-lg font-bold text-white font-serif">
-            {!loader && <>Get the app !</>}
+          <div className="text-center flex justify-center w-full py-5 text-lg font-bold text-white font-serif">
+            {!loader && <>Get the app!</>}
             {loader && <Loader />}
           </div>
 
-          {/* Play store Button */}
           <div className="flex justify-center gap-5">
-            <div class=" flex justify-center">
-              <div class="h-fit flex items-center border w-auto rounded-lg p-2 bg-black text-white">
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/888/888857.png"
-                  class="w-7 md:w-8"
-                  loading="lazy"
-                />
-                <div class="text-left ml-3">
-                  <p class="text-xs text-gray-200">Download on </p>
-                  <p class="text-md  "> Google Play</p>
-                </div>
+            <div className="flex items-center border w-auto rounded-lg p-2 bg-black text-white">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/888/888857.png"
+                className="w-7 md:w-8"
+                alt="Google Play"
+                loading="lazy"
+              />
+              <div className="text-left ml-3">
+                <p className="text-xs text-gray-200">Download on</p>
+                <p className="text-md">Google Play</p>
               </div>
             </div>
-            <div class=" flex justify-center">
-              <div class="h-fit flex items-center border w-auto rounded-lg p-2 bg-black text-white">
-                <span>
-                  <BsApple class="text-4xl" />
-                </span>
-                <div class="text-left ml-3">
-                  <p class="text-xs text-gray-200">Download on </p>
-                  <p class="text-md  "> Google Play</p>
-                </div>
+            <div className="flex items-center border w-auto rounded-lg p-2 bg-black text-white">
+              <BsApple className="text-4xl" />
+              <div className="text-left ml-3">
+                <p className="text-xs text-gray-200">Download on</p>
+                <p className="text-md">App Store</p>
               </div>
             </div>
           </div>

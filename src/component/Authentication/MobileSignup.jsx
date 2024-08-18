@@ -15,23 +15,23 @@ function MobileSignup() {
   ];
 
   const context = useContext(Context);
-  const [isSendOtp, SetisSendOtp] = useState(false);
+  const [isSendOtp, setIsSendOtp] = useState(false);
   const [countryCode, setCountryCode] = useState("+91");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [Otp, SetOtp] = useState(""); // OTP state
+  const [otp, setOtp] = useState(""); // OTP state
   const [userOtp, setUserOtp] = useState(""); // User input OTP
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // Create refs for each input field
+  // Create refs for each OTP input field
   const inputRefs = useRef([]);
 
   // Generate a random 5-digit OTP
   const generateOtp = () => {
-    const otp = Math.floor(10000 + Math.random() * 90000).toString();
-    SetOtp(otp);
-    alert(`Generated OTP: ${otp}`);
+    const generatedOtp = Math.floor(10000 + Math.random() * 90000).toString();
+    setOtp(generatedOtp);
+    alert(`Generated OTP: ${generatedOtp}`);
   };
 
   // Handle the change event and move to the next input
@@ -42,30 +42,30 @@ function MobileSignup() {
       newOtp[index] = value;
       return newOtp.join("");
     });
-    if (value.length === 1 && index < inputRefs.current.length - 1) {
-      inputRefs.current[index + 1].focus();
-    } else if (value.length === 1 && index === inputRefs.current.length - 1) {
-      inputRefs.current[index].blur();
+    if (value.length === 1) {
+      if (index < inputRefs.current.length - 1) {
+        inputRefs.current[index + 1].focus();
+      } else {
+        inputRefs.current[index].blur();
+      }
     }
   };
 
   // Send OTP function
-  const LoginSendOtp = (e) => {
+  const handleSendOtp = (e) => {
     e.preventDefault();
-    SetisSendOtp(true);
+    setIsSendOtp(true);
     generateOtp(); // Generate OTP
   };
 
   // Verify OTP
-  const verifyOtp = () => {
-    if (Otp === userOtp) {
-      dispatch(AuthActions.Login(Otp));
+  const handleVerifyOtp = () => {
+    if (otp === userOtp) {
+      dispatch(AuthActions.Login(otp));
       context.SetuserPhoneNumber(phoneNumber);
       localStorage.setItem("phone", JSON.stringify(phoneNumber));
       navigate("/onboard");
       alert("OTP Verified Successfully!");
-
-      // Proceed with the next steps
     } else {
       alert("Invalid OTP, please try again.");
     }
@@ -73,14 +73,15 @@ function MobileSignup() {
 
   return (
     <>
-      {!isSendOtp && (
-        <div className="flex flex-col items-center justify-center pt-20  px-5">
+      {!isSendOtp ? (
+        <div className="flex flex-col items-center justify-center pt-20 px-5">
           <div className="w-full max-w-md px-8 bg-[#111418] rounded-lg shadow-lg p-6">
             <div className="w-full flex justify-end">
               <button
                 type="button"
-                className="text-right text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5  items-center popup-close"
+                className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 items-center"
                 onClick={context.MobileLoginPopup}
+                aria-label="Close popup"
               >
                 <svg
                   aria-hidden="true"
@@ -95,14 +96,12 @@ function MobileSignup() {
                     clipRule="evenodd"
                   ></path>
                 </svg>
-                <span className="sr-only">Close popup</span>
               </button>
             </div>
             <h1 className="text-2xl font-semibold text-center text-white mb-4">
               Can we get your number?
             </h1>
-
-            <form onSubmit={LoginSendOtp}>
+            <form onSubmit={handleSendOtp}>
               <div className="flex mb-4 gap-2">
                 <div className="flex-shrink-0">
                   <label className="text-white">Country</label>
@@ -118,7 +117,6 @@ function MobileSignup() {
                     ))}
                   </select>
                 </div>
-
                 <div>
                   <label className="text-white">Phone Number</label>
                   <input
@@ -136,7 +134,6 @@ function MobileSignup() {
                 We'll text you a code to verify you're really you. Message and
                 data rates may apply.
               </span>
-
               <button
                 type="submit"
                 className={`w-full py-3 mt-3 text-white text-lg font-medium rounded-3xl ${
@@ -151,9 +148,7 @@ function MobileSignup() {
             </form>
           </div>
         </div>
-      )}
-
-      {isSendOtp && (
+      ) : (
         <div className="flex flex-col items-center justify-center pt-20 w-full px-5">
           <div className="w-full max-w-md px-8 py-10 bg-[#111418] rounded-lg shadow-md text-white">
             <h1 className="text-2xl font-semibold text-center mb-6">
@@ -173,8 +168,9 @@ function MobileSignup() {
                     min={0}
                     max={9}
                     maxLength={1}
-                    className="rounded-lg hide-inputScroll bg-gray-100 w-14 aspect-square flex items-center justify-center text-center"
+                    className="rounded-lg bg-gray-100 w-14 aspect-square flex items-center justify-center text-center"
                     onChange={(e) => handleChange(index, e)}
+                    aria-label={`OTP digit ${index + 1}`}
                   />
                 ))}
             </div>
@@ -182,10 +178,10 @@ function MobileSignup() {
               onClick={generateOtp}
               className="text-blue-500 text-right cursor-pointer"
             >
-              Resend ?
+              Resend?
             </p>
             <button
-              onClick={verifyOtp}
+              onClick={handleVerifyOtp}
               className="w-full px-4 py-2 text-lg font-medium text-white bg-[#FE4654] rounded-md hover:bg-blue-700 mt-4"
             >
               Verify

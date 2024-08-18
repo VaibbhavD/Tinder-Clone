@@ -19,51 +19,42 @@ function UserProfile() {
   const navigate = useNavigate();
 
   return (
-    <div class="">
-      <div class="p-8 bg-white shadow mt-24">
-        {" "}
-        <div class="grid grid-cols-1 md:grid-cols-3">
-          {" "}
-          <div class="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
-            {" "}
+    <div className="">
+      <div className="p-8 bg-white shadow mt-24">
+        <div className="grid grid-cols-1 md:grid-cols-3">
+          <div className="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
             <div>
-              {" "}
-              <p class="font-bold text-gray-700 text-xl">22</p>{" "}
-              <p class="text-gray-400">Friends</p>{" "}
-            </div>{" "}
+              <p className="font-bold text-gray-700 text-xl">22</p>
+              <p className="text-gray-400">Friends</p>
+            </div>
             <div>
-              {" "}
-              <p class="font-bold text-gray-700 text-xl">10</p>{" "}
-              <p class="text-gray-400">Photos</p>{" "}
-            </div>{" "}
+              <p className="font-bold text-gray-700 text-xl">10</p>
+              <p className="text-gray-400">Photos</p>
+            </div>
             <div>
-              {" "}
-              <p class="font-bold text-gray-700 text-xl">89</p>{" "}
-              <p class="text-gray-400">Comments</p>{" "}
-            </div>{" "}
-          </div>{" "}
-          <div class="relative">
-            {" "}
-            <div class="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
-              <img src={image} />
-            </div>{" "}
-          </div>{" "}
-          <div class="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
+              <p className="font-bold text-gray-700 text-xl">89</p>
+              <p className="text-gray-400">Comments</p>
+            </div>
+          </div>
+          <div className="relative">
+            <div className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
+              <img src={image} alt="Profile" />
+            </div>
+          </div>
+          <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
             <button
-              class="text-white py-2 px-4 uppercase rounded bg-orange-500 font-bold"
+              className="text-white py-2 px-4 uppercase rounded bg-orange-500 font-bold"
               onClick={() => navigate("/onboard")}
             >
-              {" "}
               Update Profile
-            </button>{" "}
-          </div>{" "}
-        </div>{" "}
-        <div class="mt-20 text-center border-b pb-12">
-          {" "}
-          <h1 class="text-4xl font-medium text-gray-700">
+            </button>
+          </div>
+        </div>
+        <div className="mt-20 text-center border-b pb-12">
+          <h1 className="text-4xl font-medium text-gray-700">
             {firstName} {lastName}
-          </h1>{" "}
-        </div>{" "}
+          </h1>
+        </div>
         <div className="w-full md:w-full flex-grow p-4">
           <div className="flex flex-wrap md:flex-nowrap mt-4 md:gap-4">
             <div className="flex flex-col mb-4 w-full md-full">

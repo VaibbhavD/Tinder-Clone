@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Context from "../../context/context";
 import { useContext } from "react";
+import Loader from "../Loader/loader";
 
 function Dashboard() {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
@@ -19,24 +20,30 @@ function Dashboard() {
   const [locationAccess, setLocationAccess] = useState(false);
   const [location, setLocation] = useState({ latitude: null, longitude: null });
   const [locationName, setLocationName] = useState("");
-  const [isUserProfile, setisUserProfile] = useState(false);
+  const [isUserProfile, setIsUserProfile] = useState(false);
 
   const context = useContext(Context);
-  const { image, firstName, lastName } = context.User;
-  console.log(image, firstName);
+  const {
+    image,
+    firstName,
+    lastName,
+    getUserDetails,
+    Setloader,
+    loader,
+    SetUser,
+  } = context.User;
 
-  const toggleSideMenu = () => setIsSideMenuOpen(!isSideMenuOpen);
-  const toggleProfileMenu = () => setIsProfileMenuOpen(!isProfileMenuOpen);
+  const toggleSideMenu = () => setIsSideMenuOpen((prev) => !prev);
+  const toggleProfileMenu = () => setIsProfileMenuOpen((prev) => !prev);
 
-  // Function to get reverse geocode from coordinates
   const getLocationName = async (latitude, longitude) => {
     try {
       const response = await fetch(
         `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10`
       );
       const data = await response.json();
-      if (data && data.address) {
-        const { city, state, country } = data.address;
+      if (data?.address) {
+        const { state } = data.address;
         setLocationName(state);
       }
     } catch (error) {
@@ -44,16 +51,13 @@ function Dashboard() {
     }
   };
 
-  // Get user's current location
   useEffect(() => {
-    if ("geolocation" in navigator) {
+    if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           setLocationAccess(true);
           const { latitude, longitude } = position.coords;
           setLocation({ latitude, longitude });
-
-          // Fetch location name using reverse geocoding
           getLocationName(latitude, longitude);
         },
         (error) => {
@@ -69,7 +73,7 @@ function Dashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const Logout = () => {
+  const logout = () => {
     localStorage.removeItem("User");
     localStorage.removeItem("phone");
     dispatch(AuthActions.Logout());
@@ -82,8 +86,8 @@ function Dashboard() {
         {/* Desktop sidebar */}
         <aside className="z-20 flex-shrink-0 hidden w-80 pl-2 overflow-y-auto bg-[#111418] md:block">
           <div className="text-white">
+            {/* logo */}
             <div className="flex p-2 bg-[#111418]">
-              {/* logo */}
               <div className="flex justify-center items-center">
                 <img
                   src="https://pnghq.com/wp-content/uploads/tinder-logo-png-free-png-images-download-20137-2048x1152.png"
@@ -95,7 +99,6 @@ function Dashboard() {
                 <span className="font-bold lg:text-5xl text-3xl">tinder</span>
               </div>
             </div>
-
             {/* profile image */}
             <div className="flex justify-center mt-10">
               <img
@@ -106,55 +109,52 @@ function Dashboard() {
               />
             </div>
             <p className="text-center font-bold text-lg">
-              {firstName + " " + lastName}
+              {firstName} {lastName}
             </p>
-
             {/* Search bar */}
             <div className="flex justify-center mt-10">
-              <div class="relative">
+              <div className="relative">
                 <input
                   type="search"
                   id="default-search"
-                  class="w-full p-2 pr-24 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="w-full p-2 pr-24 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Search Friend"
                   required
                 />
                 <button
                   type="submit"
-                  class="text-gray-900 absolute end-2.5 bottom-2.5"
+                  className="text-gray-900 absolute right-2.5 bottom-2.5"
                 >
                   <CgSearch />
                 </button>
               </div>
             </div>
-
             {/* Sidebar data */}
-
             <div className="flex-nowrap justify-end w-full mt-6">
               <span
-                onClick={() => setisUserProfile(true)}
-                class="flex items-center px-4 py-2 mt-3 cursor-pointer hover:border-white text-white border-2 border-gray-600 rounded-md"
+                onClick={() => setIsUserProfile(true)}
+                className="flex items-center px-4 py-2 mt-3 cursor-pointer hover:border-white text-white border-2 border-gray-600 rounded-md"
               >
                 <CgProfile />
-                <span class="mx-4 font-medium">Profile</span>
+                <span className="mx-4 font-medium">Profile</span>
               </span>
               <span
-                onClick={() => setisUserProfile(false)}
-                class="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md"
+                onClick={() => setIsUserProfile(false)}
+                className="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md"
               >
                 <MdExplore />
-                <span class="mx-4 font-medium">Explore</span>
+                <span className="mx-4 font-medium">Explore</span>
               </span>
-              <span class="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md">
+              <span className="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md">
                 <CiSettings />
-                <span class="mx-4 font-medium">Setting</span>
+                <span className="mx-4 font-medium">Setting</span>
               </span>
               <span
-                onClick={Logout}
-                class="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md"
+                onClick={logout}
+                className="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md"
               >
                 <BiLogOut className="text-red-500" />
-                <span class="mx-4 font-medium">Logout</span>
+                <span className="mx-4 font-medium">Logout</span>
               </span>
             </div>
           </div>
@@ -167,7 +167,6 @@ function Dashboard() {
             onClick={() => setIsSideMenuOpen(false)}
           />
         )}
-
         <aside
           className={`fixed inset-y-0 z-20 flex-shrink-0 w-64 overflow-y-auto bg-[#111418] dark:bg-gray-800 md:hidden transition-transform duration-150 ease-in-out transform ${
             isSideMenuOpen ? "translate-x-0" : "-translate-x-full"
@@ -176,40 +175,40 @@ function Dashboard() {
           {/* Mobile Sidebar content */}
           <div className="flex justify-center mt-10">
             <img
-              className=" h-40 w-40 rounded-full sm:block object-cover mr-2 border-4 border-[#FE4654]"
+              className="h-40 w-40 rounded-full sm:block object-cover mr-2 border-4 border-[#FE4654]"
               src={image}
               alt="Avatar"
               loading="lazy"
             />
           </div>
           <p className="text-center font-bold text-lg text-orange-500">
-            {firstName + " " + lastName}
+            {firstName} {lastName}
           </p>
           <div className="flex-nowrap justify-end w-full mt-6">
             <span
-              onClick={() => setisUserProfile(true)}
-              class="flex items-center px-4 py-2 mt-3 cursor-pointer hover:border-white text-white border-2 border-gray-600 rounded-md"
+              onClick={() => setIsUserProfile(true)}
+              className="flex items-center px-4 py-2 mt-3 cursor-pointer hover:border-white text-white border-2 border-gray-600 rounded-md"
             >
               <CgProfile />
-              <span class="mx-4 font-medium">Profile</span>
+              <span className="mx-4 font-medium">Profile</span>
             </span>
             <span
-              onClick={() => setisUserProfile(false)}
-              class="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md"
+              onClick={() => setIsUserProfile(false)}
+              className="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md"
             >
               <MdExplore />
-              <span class="mx-4 font-medium">Explore</span>
+              <span className="mx-4 font-medium">Explore</span>
             </span>
-            <span class="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md">
+            <span className="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md">
               <CiSettings />
-              <span class="mx-4 font-medium">Setting</span>
+              <span className="mx-4 font-medium">Setting</span>
             </span>
             <span
-              onClick={Logout}
-              class="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md"
+              onClick={logout}
+              className="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md"
             >
               <BiLogOut className="text-red-500" />
-              <span class="mx-4 font-medium">Logout</span>
+              <span className="mx-4 font-medium">Logout</span>
             </span>
           </div>
         </aside>
@@ -241,7 +240,7 @@ function Dashboard() {
               <button
                 className="relative text-3xl focus:outline-none"
                 aria-label="Profile menu"
-                onClick={() => setisUserProfile(true)}
+                onClick={() => setIsUserProfile(true)}
               >
                 <CgProfile />
               </button>
@@ -250,8 +249,7 @@ function Dashboard() {
 
           {/* Main Dashboard Data */}
           <main className="">
-            <div className="grid mb-4 mx-4 rounded-3xl ">
-              {/* Render ErrorPage if location services are off, otherwise render UserCard */}
+            <div className="grid mb-4 mx-4 rounded-3xl">
               {locationAccess && !isUserProfile && (
                 <UserCard location={locationName} />
               )}

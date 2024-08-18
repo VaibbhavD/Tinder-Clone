@@ -3,10 +3,9 @@ import Context from "../../context/context";
 import { useNavigate } from "react-router-dom";
 
 function UserForm() {
-  const { User, userPhoneNumber, AddNewUser } = useContext(Context); // Get email and phone from context
+  const { User, userPhoneNumber, AddNewUser } = useContext(Context);
   const navigate = useNavigate();
 
-  // Use separate state for User email
   const [Useremail, setUserEmail] = useState(User?.email || "");
 
   const [formData, setFormData] = useState({
@@ -16,11 +15,11 @@ function UserForm() {
     birthDate: "",
     gender: "Male",
     relationship: "Short Term",
-    email: User?.email || "", // Keep email here for initial population
+    email: User?.email || "",
     phoneNumber: userPhoneNumber,
+    termsAccepted: false,
   });
 
-  // Handle form field changes
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -29,32 +28,24 @@ function UserForm() {
     });
   };
 
-  // Handle email change separately
   const handleEmailChange = (e) => {
-    setUserEmail(e.target.value); // Update the email state directly
+    setUserEmail(e.target.value);
   };
 
-  // Handle image change
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-
     if (file) {
-      // Clean up the previous blob URL if it exists
       if (formData.image) {
         URL.revokeObjectURL(formData.image);
       }
-
-      // Create a new blob URL and set it in the formData
       const newImageUrl = URL.createObjectURL(file);
-
       setFormData({
         ...formData,
-        image: newImageUrl, // Set the blob URL in the formData
+        image: newImageUrl,
       });
     }
   };
 
-  // Handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formData.termsAccepted) {
@@ -64,26 +55,22 @@ function UserForm() {
 
     const newUser = {
       ...formData,
-      email: Useremail, // Ensure we use the updated email value
+      email: Useremail,
     };
 
-    // Call your addNewUser function here with newUser data
     addNewUser(newUser);
   };
 
-  // Add new user logic
   const addNewUser = (user) => {
-    console.log("New user added:", user);
     localStorage.setItem("User", JSON.stringify(user));
     AddNewUser(user);
     navigate("/dashboard");
-    // Add logic to store the user data (e.g., API call or Firebase)
   };
 
   return (
     <div className="w-full h-screen pt-10 bg-[#111418]">
       <button
-        className={`p-3 lg:ml-44 duration-200 rounded-full bg-gray-600 text-white absolute top-5 }`}
+        className="p-3 lg:ml-44 duration-200 rounded-full bg-gray-600 text-white absolute top-5"
         onClick={() => navigate(-1)}
       >
         <svg
@@ -92,7 +79,7 @@ function UserForm() {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="size-6 hover:scale-110 font-bold "
+          className="size-6 hover:scale-110 font-bold"
         >
           <path
             strokeLinecap="round"
@@ -114,9 +101,8 @@ function UserForm() {
         </div>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 gap-2 mt-2 sm:grid-cols-2">
-            {/* Firstname & Lastname */}
             <div className="mt-8">
-              <label className="text-white " htmlFor="firstName">
+              <label className="text-white" htmlFor="firstName">
                 Firstname
               </label>
               <input
@@ -128,13 +114,9 @@ function UserForm() {
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md"
                 required
               />
-
               <div className="mt-4">
-                <label
-                  className="text-white dark:text-gray-200"
-                  htmlFor="lastName"
-                >
-                  LastName
+                <label className="text-white" htmlFor="lastName">
+                  Lastname
                 </label>
                 <input
                   id="lastName"
@@ -147,8 +129,6 @@ function UserForm() {
                 />
               </div>
             </div>
-
-            {/* Upload Image */}
             <div>
               <label className="block text-sm font-medium text-white"></label>
               <div className="w-full mt-1 flex justify-center px-6 pt-5 pb-6">
@@ -176,26 +156,22 @@ function UserForm() {
                 </div>
               </div>
             </div>
-
-            {/* Email */}
             <div>
-              <label className="text-white dark:text-gray-200" htmlFor="email">
+              <label className="text-white" htmlFor="email">
                 Email Address
               </label>
               <input
                 id="email"
                 type="email"
                 value={Useremail}
-                disabled={!!User?.email} // Disable email if it's already populated from User context
-                onChange={handleEmailChange} // Handle email change separately
+                disabled={!!User?.email}
+                onChange={handleEmailChange}
                 className="block w-full px-4 py-2 mt-2 text-gray-400 bg-white border border-gray-300 rounded-md"
                 required
               />
             </div>
-
-            {/* Phone */}
             <div>
-              <label className="text-white dark:text-gray-200" htmlFor="phone">
+              <label className="text-white" htmlFor="phone">
                 Phone Number
               </label>
               <input
@@ -207,13 +183,8 @@ function UserForm() {
                 required
               />
             </div>
-
-            {/* Birth date */}
             <div>
-              <label
-                className="text-white dark:text-gray-200"
-                htmlFor="birthDate"
-              >
+              <label className="text-white" htmlFor="birthDate">
                 Birth date
               </label>
               <input
@@ -226,10 +197,8 @@ function UserForm() {
                 required
               />
             </div>
-
-            {/* Gender */}
             <div>
-              <label className="text-white dark:text-gray-200" htmlFor="gender">
+              <label className="text-white" htmlFor="gender">
                 Gender
               </label>
               <select
@@ -244,13 +213,8 @@ function UserForm() {
                 <option value="Female">Female</option>
               </select>
             </div>
-
-            {/* Relationship */}
             <div>
-              <label
-                className="text-white dark:text-gray-200"
-                htmlFor="relationship"
-              >
+              <label className="text-white" htmlFor="relationship">
                 Relationship
               </label>
               <select
@@ -267,7 +231,6 @@ function UserForm() {
               </select>
             </div>
           </div>
-
           <div className="flex items-center mt-5 text-white">
             <input
               id="termsAccepted"
@@ -288,7 +251,6 @@ function UserForm() {
               .
             </label>
           </div>
-
           <div className="flex justify-end mt-6 mb-11 w-full">
             <button
               type="submit"
