@@ -46,7 +46,6 @@ export const ContextProvider = (props) => {
   // Add new User
   const AddNewUser = async (user) => {
     Setloader(true);
-    console.log(user.email);
     const dbref = doc(fireDB, "users", user.email);
     const profileref = collection(dbref, "Profile");
     try {
@@ -91,6 +90,7 @@ export const ContextProvider = (props) => {
     mode: Mode,
     loader: loader,
     User: User,
+    SetUser: SetUser,
     Setloader: Setloader,
     ToggleMode: ToggleMode,
     isLoginPopup: isLoginPopup,

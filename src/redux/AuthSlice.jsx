@@ -14,7 +14,6 @@ const AuthSlice = createSlice({
     },
     Logout(state, action) {
       state.isLoggedin = false;
-      state.isAdmin = false;
     },
   },
 });
