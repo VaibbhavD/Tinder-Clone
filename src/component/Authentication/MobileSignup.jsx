@@ -31,7 +31,7 @@ function MobileSignup() {
   const generateOtp = () => {
     const otp = Math.floor(10000 + Math.random() * 90000).toString();
     SetOtp(otp);
-    console.log(`Generated OTP: ${otp}`);
+    alert(`Generated OTP: ${otp}`);
   };
 
   // Handle the change event and move to the next input
@@ -178,7 +178,12 @@ function MobileSignup() {
                   />
                 ))}
             </div>
-            <p className="text-blue-500 text-right cursor-pointer">Resend ?</p>
+            <p
+              onClick={generateOtp}
+              className="text-blue-500 text-right cursor-pointer"
+            >
+              Resend ?
+            </p>
             <button
               onClick={verifyOtp}
               className="w-full px-4 py-2 text-lg font-medium text-white bg-[#FE4654] rounded-md hover:bg-blue-700 mt-4"
