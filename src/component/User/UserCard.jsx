@@ -66,7 +66,10 @@ function UserCard(props) {
   return (
     <section className="mb-2 border rounded-lg w-full bg-[#111418]">
       {users.map((user) => (
-        <div className="flex flex-wrap bg-gray-700 m-2 rounded-2xl border-2 border-gray-500 text-white">
+        <div
+          className="flex flex-wrap bg-gray-700 m-2 rounded-2xl border-2 border-gray-500 text-white"
+          key={user.firstName}
+        >
           <div className="w-1/3 md:w-1/4 flex-shrink-0 p-4 flex justify-center items-center">
             <img
               className="object-cover w-full h-full md:w-40 md:h-40 rounded-full border-2 border-orange-500"
