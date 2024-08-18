@@ -11,7 +11,7 @@ import {
 } from "../../firebase/FirebaseConfig";
 import { toast } from "react-toastify";
 import Loader from "../Loader/loader";
-import { collection, doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { AuthActions } from "../../redux/AuthSlice";
 import { useNavigate } from "react-router-dom";
@@ -29,24 +29,36 @@ function Login() {
       const user = result.user;
       console.log(user);
 
+      // Reference to the user's document in Firestore
+      const userRef = doc(fireDB, "Users", user.email);
+
       // Check if the user already exists in Firestore
-      const userRef = collection(fireDB, "Users");
-      const userDoc = await getDoc(doc(userRef, user.uid));
+      const userDoc = await getDoc(userRef);
 
       if (!userDoc.exists()) {
+        // User does not exist, proceed with sign-up
+        await setDoc(userRef, {
+          email: user.email /* Add any additional user info here */,
+        });
+
+        // Dispatch login action and save user data
         dispatch(AuthActions.Login(user.email));
         localStorage.setItem("User", JSON.stringify(result.user));
         SetUser(user);
-        Setloader(false);
         MobileLoginPopup();
-        // navigate("/"); // Redirect to home or profile page
+        // Optionally navigate to a different page if needed
+        // navigate("/create"); // Redirect to create page or another page as needed
       } else {
-        navigate("/dashboard");
-        console.log("Error");
-        Setloader(false);
+        // User exists, proceed with login
+        // Dispatch login action and save user data
+        dispatch(AuthActions.Login(user.email));
+        localStorage.setItem("User", JSON.stringify(result.user));
+        SetUser(user);
+        navigate("/dashboard"); // Redirect to the dashboard or appropriate page
+        console.log("User already exists");
       }
     } catch (error) {
-      Setloader(false);
+      console.error("Error during Google sign-up:", error);
     } finally {
       LoginPopup();
       Setloader(false);
