@@ -12,6 +12,7 @@ export const ContextProvider = (props) => {
 
   // Loader state
   const [loader, Setloader] = useState(false);
+  const [PageLoader, SetPageLoader] = useState(false);
 
   // Dark Mode Toggle
   const ToggleMode = () => {
@@ -66,6 +67,7 @@ export const ContextProvider = (props) => {
 
   // Get User Details from Firestore
   const getUserDetails = async (Email) => {
+    SetPageLoader(true);
     const userDocRef = doc(fireDB, "Users", Email); // Corrected document reference
     const profileRef = collection(userDocRef, "Profile");
 
@@ -83,14 +85,18 @@ export const ContextProvider = (props) => {
       });
       localStorage.setItem("Users", JSON.stringify(userData));
       SetUser(userData);
+      SetPageLoader(false);
     } catch (error) {
       console.error("Error fetching user details:", error);
+      SetPageLoader(false);
     }
   };
 
   const context = {
     mode: Mode,
     loader: loader,
+    PageLoader: PageLoader,
+    SetPageLoader: SetPageLoader,
     User: User,
     SetUser: SetUser,
     Setloader: Setloader,
