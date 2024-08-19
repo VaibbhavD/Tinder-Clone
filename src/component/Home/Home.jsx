@@ -11,12 +11,20 @@ function Home() {
   const context = useContext(Context);
   return (
     <div
-      className="w-full min-h-screen lg:bg-contain bg-fixed"
+      className="w-full min-h-screen lg:bg-contain bg-fixed relative"
       style={{
         backgroundImage:
-          "url('https://i.pinimg.com/originals/16/f7/f1/16f7f147c3a048bd8dde2774315d4b39.png')",
+          "url('https://sketchelements.com/wp-content/uploads/2020/08/tinder-app-concept.png')",
+        // Add vintage effect
       }}
     >
+      {/* Pseudo-element for vignette effect */}
+      <div
+        className="absolute inset-0 bg-black opacity-30 pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, transparent 60%, black 100%)",
+        }}
+      ></div>
       <Hero_Section />
       <Testimonal />
       <Footer />
