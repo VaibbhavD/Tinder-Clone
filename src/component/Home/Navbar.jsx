@@ -64,8 +64,8 @@ export default function Navbar() {
                       to={"/"}
                       className={({ isActive }) =>
                         isActive
-                          ? "font-medium text-pink-500 "
-                          : "font-medium text-gray-900 "
+                          ? "font-bold text-pink-500 "
+                          : "font-bold text-gray-900 "
                       }
                     >
                       Products
@@ -76,16 +76,16 @@ export default function Navbar() {
                     <select
                       className={`${
                         mode === "dark"
-                          ? " font-medium cursor-pointer bg-transparent "
-                          : " font-medium  cursor-pointer   "
+                          ? " font-bold cursor-pointer bg-transparent "
+                          : " font-bold  cursor-pointer   "
                       }`}
                       defaultValue=""
                     >
                       <option
                         className={`${
                           mode === "dark"
-                            ? " text-xs font-medium bg-gray-700 cursor-pointer text-white"
-                            : "text-xs font-medium  cursor-pointer bg-stone-100"
+                            ? " text-xs font-bold bg-gray-700 cursor-pointer text-white"
+                            : "text-xs font-bold  cursor-pointer bg-stone-100"
                         }`}
                         value=""
                         disabled
@@ -95,8 +95,8 @@ export default function Navbar() {
                       <option
                         className={`${
                           mode === "dark"
-                            ? "text-xs font-medium  cursor-pointer bg-gray-700"
-                            : "text-xs font-medium  cursor-pointer bg-stone-100"
+                            ? "text-xs font-bold  cursor-pointer bg-gray-700"
+                            : "text-xs font-bold  cursor-pointer bg-stone-100"
                         }`}
                         value="cloths"
                       >
@@ -105,8 +105,8 @@ export default function Navbar() {
                       <option
                         className={`${
                           mode === "dark"
-                            ? "text-xs font-medium   cursor-pointer bg-gray-700"
-                            : "text-xs font-medium cursor-pointer  bg-stone-100"
+                            ? "text-xs font-bold   cursor-pointer bg-gray-700"
+                            : "text-xs font-bold cursor-pointer  bg-stone-100"
                         }`}
                         value="mobiles"
                       >
@@ -115,8 +115,8 @@ export default function Navbar() {
                       <option
                         className={`${
                           mode === "dark"
-                            ? "text-xs font-medium  cursor-pointer  bg-gray-700"
-                            : "text-xs font-medium cursor-pointer  bg-stone-100"
+                            ? "text-xs font-bold  cursor-pointer  bg-gray-700"
+                            : "text-xs font-bold cursor-pointer  bg-stone-100"
                         }`}
                         value="furniture"
                       >
@@ -125,8 +125,8 @@ export default function Navbar() {
                       <option
                         className={`${
                           mode === "dark"
-                            ? "text-xs font-medium  cursor-pointer  bg-gray-700"
-                            : "text-xs font-medium cursor-pointer  bg-stone-100"
+                            ? "text-xs font-bold  cursor-pointer  bg-gray-700"
+                            : "text-xs font-bold cursor-pointer  bg-stone-100"
                         }`}
                         value="electronics"
                       >
@@ -141,8 +141,8 @@ export default function Navbar() {
                       to={"/dashboard"}
                       className={({ isActive }) =>
                         isActive
-                          ? "font-medium text-pink-500 "
-                          : "font-medium text-gray-900 "
+                          ? "font-bold text-pink-500 "
+                          : "font-bold text-gray-900 "
                       }
                     >
                       Safety
@@ -155,8 +155,8 @@ export default function Navbar() {
                       to={"/aboutus"}
                       className={({ isActive }) =>
                         isActive
-                          ? "font-medium text-pink-500 "
-                          : "font-medium text-gray-900 "
+                          ? "font-bold text-pink-500 "
+                          : "font-bold text-gray-900 "
                       }
                     >
                       Suppport
@@ -167,9 +167,7 @@ export default function Navbar() {
                     <NavLink
                       to={"/profile"}
                       className={({ isActive }) =>
-                        isActive
-                          ? "font-medium text-pink-500 "
-                          : "font-medium  "
+                        isActive ? "font-bold text-pink-500 " : "font-bold  "
                       }
                     >
                       <span className="text-center">Download</span>
@@ -220,8 +218,8 @@ export default function Navbar() {
                     to={"/"}
                     className={({ isActive }) =>
                       isActive
-                        ? "text-lg font-medium  border-b-2 border-pink-500"
-                        : "text-lg font-medium "
+                        ? "text-lg font-bold  border-b-2 border-pink-500"
+                        : "text-lg font-bold "
                     }
                   >
                     Products{" "}
@@ -232,8 +230,8 @@ export default function Navbar() {
                     to={"/order"}
                     className={({ isActive }) =>
                       isActive
-                        ? "text-lg font-medium  border-b-2 border-pink-500"
-                        : "text-lg font-medium "
+                        ? "text-lg font-bold  border-b-2 border-pink-500"
+                        : "text-lg font-bold "
                     }
                   >
                     Learn
@@ -245,8 +243,8 @@ export default function Navbar() {
                     to={"/order"}
                     className={({ isActive }) =>
                       isActive
-                        ? "text-lg font-medium  border-b-2 border-pink-500"
-                        : "text-lg font-medium "
+                        ? "text-lg font-bold  border-b-2 border-pink-500"
+                        : "text-lg font-bold "
                     }
                   >
                     Safety
@@ -258,8 +256,8 @@ export default function Navbar() {
                     to={"/dashboard"}
                     className={({ isActive }) =>
                       isActive
-                        ? "text-lg font-medium  border-b-2 border-pink-500"
-                        : "text-lg font-medium "
+                        ? "text-lg font-bold  border-b-2 border-pink-500"
+                        : "text-lg font-bold "
                     }
                   >
                     Download
@@ -271,8 +269,8 @@ export default function Navbar() {
                     to={"/aboutus"}
                     className={({ isActive }) =>
                       isActive
-                        ? "text-lg font-medium  border-b-2 border-pink-500"
-                        : "text-lg font-medium "
+                        ? "text-lg font-bold  border-b-2 border-pink-500"
+                        : "text-lg font-bold "
                     }
                   >
                     Support
