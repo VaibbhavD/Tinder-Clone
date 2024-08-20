@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import Context from "../../context/context";
 import { useContext } from "react";
 import Loader from "../Loader/loader";
+import PageLoader from "../Loader/PageLoader";
 
 function Dashboard() {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
@@ -31,6 +32,7 @@ function Dashboard() {
     Setloader,
     loader,
     SetUser,
+    PageLoader,
   } = context.User;
 
   const toggleSideMenu = () => setIsSideMenuOpen((prev) => !prev);
