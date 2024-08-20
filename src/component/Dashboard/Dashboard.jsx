@@ -13,7 +13,8 @@ import { useNavigate } from "react-router-dom";
 import Context from "../../context/context";
 import { useContext } from "react";
 import Loader from "../Loader/loader";
-import PageLoader from "../Loader/PageLoader";
+import MessagePage from "./MessagePage";
+import MatchesPage from "./MatchesPage";
 
 function Dashboard() {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
@@ -22,6 +23,8 @@ function Dashboard() {
   const [location, setLocation] = useState({ latitude: null, longitude: null });
   const [locationName, setLocationName] = useState("");
   const [isUserProfile, setIsUserProfile] = useState(false);
+  const [isMessages, SetisMessages] = useState(false);
+  const [isMatches, SetisMatches] = useState(true);
 
   const context = useContext(Context);
   const {
@@ -82,83 +85,92 @@ function Dashboard() {
     navigate("/");
   };
 
+  const handleMatches = () => {
+    SetisMatches(true);
+    SetisMessages(false);
+  };
+
+  const handleMessages = () => {
+    SetisMessages(true);
+    SetisMatches(false);
+  };
+
   return (
     <>
       <div className={`flex h-screen bg-[#111418]`}>
         {/* Desktop sidebar */}
-        <aside className="z-20 flex-shrink-0 hidden w-80 pl-2 overflow-y-auto bg-[#111418] md:block">
-          <div className="text-white">
-            {/* logo */}
-            <div className="flex p-2 bg-[#111418]">
-              <div className="flex justify-center items-center">
-                <img
-                  src="https://pnghq.com/wp-content/uploads/tinder-logo-png-free-png-images-download-20137-2048x1152.png"
-                  width={80}
-                  height={80}
-                  loading="lazy"
-                  className="pt-2"
-                />
-                <span className="font-bold lg:text-5xl text-3xl">tinder</span>
-              </div>
-            </div>
+        <aside className="z-20 flex-shrink-0 hidden w-96 border-r-2  overflow-y-auto bg-[#111418] md:block">
+          {/* first row */}
+          <div className="text-white flex  py-6 bg-[#FE4654] px-4">
             {/* profile image */}
-            <div className="flex justify-center mt-10">
+            <div className="flex justify-center items-center">
               <img
-                className="hidden h-24 w-24 rounded-full sm:block object-cover mr-2 border-4 border-[#FE4654]"
+                className="hidden h-10 w-10 rounded-full sm:block object-cover mr-2 border-2 border-[#FE4654]"
                 src={image}
                 alt="Avatar"
                 loading="lazy"
               />
+              <p className="text-center font-bold text-lg">{firstName}</p>
             </div>
-            <p className="text-center font-bold text-lg">
-              {firstName} {lastName}
-            </p>
-            {/* Search bar */}
-            <div className="flex justify-center mt-10">
-              <div className="relative">
-                <input
-                  type="search"
-                  id="default-search"
-                  className="w-full p-2 pr-24 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Search Friend"
-                  required
-                />
-                <button
-                  type="submit"
-                  className="text-gray-900 absolute right-2.5 bottom-2.5"
-                >
-                  <CgSearch />
-                </button>
-              </div>
-            </div>
-            {/* Sidebar data */}
-            <div className="flex-nowrap justify-end w-full mt-6">
+            {/* menues */}
+            <div className="flex justify-end items-center w-full gap-6">
               <span
+                className="rounded-full bg-black p-1 bg-opacity-65 cursor-pointer"
                 onClick={() => setIsUserProfile(true)}
-                className="flex items-center px-4 py-2 mt-3 cursor-pointer hover:border-white text-white border-2 border-gray-600 rounded-md"
+                title="Profile"
               >
-                <CgProfile />
-                <span className="mx-4 font-medium">Profile</span>
+                <CgProfile className="text-2xl" />
               </span>
               <span
+                className="rounded-full bg-black p-1 bg-opacity-65 cursor-pointer"
                 onClick={() => setIsUserProfile(false)}
-                className="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md"
+                title="Explore"
               >
-                <MdExplore />
-                <span className="mx-4 font-medium">Explore</span>
-              </span>
-              <span className="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md">
-                <CiSettings />
-                <span className="mx-4 font-medium">Setting</span>
+                <MdExplore className="text-2xl" />
               </span>
               <span
+                className="rounded-full bg-black p-1 bg-opacity-65 cursor-pointer"
+                title="Setting"
+              >
+                <CiSettings className="text-2xl" />
+              </span>
+              {/* <span
                 onClick={logout}
                 className="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md"
               >
                 <BiLogOut className="text-red-500" />
                 <span className="mx-4 font-medium">Logout</span>
-              </span>
+              </span> */}
             </div>
+          </div>
+          {/* second row */}
+          <div className="text-white flex gap-4 p-2 px-6 font-bold">
+            <span
+              className={`cursor-pointer ${
+                isMatches
+                  ? "underline underline-offset-4 decoration-[#FE4654] decoration-2"
+                  : ""
+              }`}
+              onClick={handleMatches}
+            >
+              Matches
+            </span>
+            <span
+              className={`cursor-pointer ${
+                isMessages
+                  ? "underline underline-offset-4 decoration-[#FE4654] decoration-2"
+                  : ""
+              }`}
+              onClick={handleMessages}
+            >
+              Messages
+            </span>
+          </div>
+
+          {/* Sidebar data */}
+          <div>
+            {isMatches && <MatchesPage />}
+            {isMessages && <MessagePage />}
           </div>
         </aside>
 
