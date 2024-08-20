@@ -13,22 +13,25 @@ import { useEffect } from "react";
 function App() {
   const isLoggedIn = useSelector((state) => state.authUser.isLoggedin);
   const dispatch = useDispatch();
+
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("User"));
     if (user) {
       dispatch(AuthActions.Login(user));
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <ContextProvider>
       <Router>
         <Routes>
-          {!isLoggedIn && <Route path="/" element={<Home />} />}
-          {!isLoggedIn && <Route path="*" element={<Home />} />}
-          {isLoggedIn && <Route path="/dashboard" element={<Dashboard />} />}
+          <Route path="/" element={isLoggedIn ? <Dashboard /> : <Home />} />
           <Route path="/onboard" element={<UserForm />} />
-          {isLoggedIn && <Route path="/*" element={<Dashboard />} />}
+          <Route
+            path="/dashboard"
+            element={isLoggedIn ? <Dashboard /> : <Home />}
+          />
+          <Route path="/*" element={isLoggedIn ? <Dashboard /> : <Home />} />
         </Routes>
         <ToastContainer />
       </Router>
