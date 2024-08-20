@@ -28,7 +28,7 @@ function App() {
           {!isLoggedIn && <Route path="*" element={<Home />} />}
           {isLoggedIn && <Route path="/dashboard" element={<Dashboard />} />}
           <Route path="/onboard" element={<UserForm />} />
-          {isLoggedIn && <Route path="*" element={<Dashboard />} />}
+          {isLoggedIn && <Route path="/*" element={<Dashboard />} />}
         </Routes>
         <ToastContainer />
       </Router>
