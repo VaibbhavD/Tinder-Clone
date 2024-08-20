@@ -9,15 +9,15 @@ function UserForm() {
   const [Useremail, setUserEmail] = useState(User?.email || "");
 
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    image: "",
-    birthDate: "",
-    gender: "Male",
-    relationship: "Short Term",
+    firstName: User.firstName || "",
+    lastName: User.lastName || "",
+    image: User.image || "",
+    birthDate: User.birthDate || "",
+    gender: User.gender || "Male",
+    relationship: User.relationship || "Short Term",
     email: User?.email || "",
-    phoneNumber: userPhoneNumber,
-    termsAccepted: false,
+    phoneNumber: User.phoneNumber || userPhoneNumber,
+    termsAccepted: User.termsAccepted || false,
   });
 
   const handleChange = (e) => {
@@ -177,8 +177,8 @@ function UserForm() {
               <input
                 id="phone"
                 type="tel"
-                value={userPhoneNumber}
-                disabled
+                value={formData.phoneNumber}
+                disabled={!!User.phoneNumber}
                 className="block w-full px-4 py-2 mt-2 text-gray-400 bg-white border border-gray-300 rounded-md"
                 required
               />
