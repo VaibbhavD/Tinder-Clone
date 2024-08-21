@@ -15,6 +15,7 @@ import { useContext } from "react";
 import Loader from "../Loader/loader";
 import MessagePage from "./MessagePage";
 import MatchesPage from "./MatchesPage";
+import UserMenu from "./UserMenu";
 
 function Dashboard() {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
@@ -270,6 +271,7 @@ function Dashboard() {
               {!locationAccess && !isUserProfile && <ErrorPage />}
               {isUserProfile && <UserProfile />}
             </div>
+            <div className="text-white"></div>
           </main>
         </div>
       </div>
