@@ -39,6 +39,7 @@ function Dashboard() {
     PageLoader,
   } = context.User;
 
+  const [UserImage, SetUserImage] = useState(context.User.image);
   const toggleSideMenu = () => setIsSideMenuOpen((prev) => !prev);
   const toggleProfileMenu = () => setIsProfileMenuOpen((prev) => !prev);
 
@@ -191,7 +192,7 @@ function Dashboard() {
           <div className="flex justify-center mt-10">
             <img
               className="h-40 w-40 rounded-full sm:block object-cover mr-2 border-4 border-[#FE4654]"
-              src={image}
+              src={UserImage}
               alt="Avatar"
               loading="lazy"
             />
