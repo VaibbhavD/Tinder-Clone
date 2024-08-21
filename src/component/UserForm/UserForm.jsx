@@ -62,7 +62,7 @@ function UserForm() {
   };
 
   const addNewUser = (user) => {
-    localStorage.setItem("User", JSON.stringify(user));
+    localStorage.setItem("Users", JSON.stringify(user));
     AddNewUser(user);
     navigate("/dashboard");
   };

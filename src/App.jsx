@@ -15,7 +15,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("User"));
+    const user = JSON.parse(localStorage.getItem("Users"));
     if (user) {
       dispatch(AuthActions.Login(user));
     }
