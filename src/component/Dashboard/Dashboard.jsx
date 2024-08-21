@@ -136,13 +136,6 @@ function Dashboard() {
               >
                 <CiSettings className="text-2xl" />
               </span>
-              {/* <span
-                onClick={logout}
-                className="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md"
-              >
-                <BiLogOut className="text-red-500" />
-                <span className="mx-4 font-medium">Logout</span>
-              </span> */}
             </div>
           </div>
           {/* second row */}
@@ -174,6 +167,17 @@ function Dashboard() {
             {isMatches && <MatchesPage />}
             {isMessages && <MessagePage />}
           </div>
+          {isUserProfile && (
+            <div className="w-full mt-60">
+              <span
+                onClick={logout}
+                className="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md"
+              >
+                <BiLogOut className="text-red-500" />
+                <span className="mx-4 font-medium">Logout</span>
+              </span>
+            </div>
+          )}
         </aside>
 
         {/* Mobile Sidebar */}
