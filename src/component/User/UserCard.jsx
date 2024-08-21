@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
+import { RiVerifiedBadgeFill } from "react-icons/ri";
+import { useSwipeable } from "react-swipeable";
+import "./UserCard.css"; // Import the CSS file for animation styles
+import { BiLike } from "react-icons/bi";
+import { RiEjectFill } from "react-icons/ri";
+import { BiLeftArrow } from "react-icons/bi";
+import { BiRightArrow } from "react-icons/bi";
+import { BiMessage } from "react-icons/bi";
 
-function UserCard(props) {
+function UserCard() {
   const users = [
     {
       firstName: "Rohit",
@@ -63,56 +71,97 @@ function UserCard(props) {
     },
   ];
 
-  return (
-    <section className="mb-2 border rounded-lg w-full bg-[#111418]">
-      {users.map((user) => (
-        <div
-          className="flex flex-wrap bg-gray-700 m-2 rounded-2xl border-2 border-gray-500 text-white"
-          key={user.firstName}
-        >
-          <div className="w-1/3 md:w-1/4 flex-shrink-0 p-4 flex justify-center items-center">
-            <img
-              className="object-cover w-full h-full md:w-40 md:h-40 rounded-full border-2 border-orange-500"
-              src={user.profileImage}
-              alt="Profile Image"
-              loading="lazy"
-              width={128}
-              height={128}
-            />
-          </div>
-          <div className="w-full md:w-3/4 flex-grow p-4">
-            <h3 className="text-xl text-orange-600 font-bold">
-              {user.firstName + " " + user.lastName}
-            </h3>
-            <p>{props.location}</p>
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isSwiping, setIsSwiping] = useState(false);
+  const [direction, setDirection] = useState("");
 
-            <div className="flex flex-wrap md:flex-nowrap mt-4 md:gap-4">
-              <div className="flex flex-col mb-4 w-full md:w-1/2">
-                <span className="font-bold">Email:</span>
-                <p>{user.email}</p>
-              </div>
-              <div className="flex flex-col mb-4 w-full md:w-1/2">
-                <span className="font-bold">Phone Number:</span>
-                <p>{user.phoneNumber}</p>
-              </div>
-            </div>
-            <div className="flex flex-wrap md:flex-nowrap md:gap-4">
-              <div className="flex flex-col mb-4 w-full md:w-1/3">
-                <span className="font-bold">Birth Date:</span>
-                <p>{user.birthDate}</p>
-              </div>
-              <div className="flex flex-col mb-4 w-full md:w-1/3">
-                <span className="font-bold">Gender:</span>
-                <p>{user.gender}</p>
-              </div>
-              <div className="flex flex-col mb-4 w-full md:w-1/3">
-                <span className="font-bold">Relationship:</span>
-                <p>{user.relationship}</p>
-              </div>
-            </div>
+  const calculateAge = (birthDate) => {
+    const birth = new Date(birthDate);
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birth.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  };
+
+  const handleSwipeLeft = () => {
+    setDirection("left");
+    setIsSwiping(true);
+    setTimeout(() => {
+      setCurrentIndex((prevIndex) => {
+        // Move to the next user, loop to the beginning if at the end
+        return (prevIndex + 1) % users.length;
+      });
+      setIsSwiping(false);
+      setDirection("");
+    }, 300); // Adjusted animation duration
+  };
+
+  const handleSwipeRight = () => {
+    setDirection("right");
+    setIsSwiping(true);
+    setTimeout(() => {
+      setCurrentIndex((prevIndex) => {
+        // Move to the previous user, loop to the end if at the beginning
+        return (prevIndex + 1 + users.length) % users.length;
+      });
+      setIsSwiping(false);
+      setDirection("");
+    }, 300); // Adjusted animation duration
+  };
+
+  const handlers = useSwipeable({
+    onSwipedLeft: handleSwipeLeft,
+    onSwipedRight: handleSwipeRight,
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+  });
+
+  return (
+    <section
+      className="mb-2 mt-10 md:mt-4 rounded-lg w-full bg-[#111418]"
+      {...handlers}
+    >
+      <div className="w-full h-[550px] flex justify-center">
+        <div
+          className={`md:w-96 w-80 h-full bg-cover cursor-pointer flex justify-start items-end rounded-lg user-card ${
+            isSwiping ? direction : ""
+          }`}
+          style={{
+            backgroundImage: `url(${users[currentIndex].profileImage})`,
+          }}
+        >
+          <div className="bg-black border-b border-l border-r rounded-b-lg p-4 w-full">
+            <p className="text-3xl font-bold text-white flex items-center">
+              {users[currentIndex].firstName} {users[currentIndex].lastName}
+              <RiVerifiedBadgeFill className="text-2xl text-blue-500 ml-2" />
+            </p>
+            <p className="text-lg text-white">
+              Age: {calculateAge(users[currentIndex].birthDate)}
+            </p>
           </div>
         </div>
-      ))}
+      </div>
+      <div className="flex justify-center items-center gap-6 mt-5">
+        <BiLeftArrow
+          className="text-white text-4xl cursor-pointer"
+          onClick={handleSwipeLeft}
+        />
+        <RiEjectFill className="text-red-600 text-4xl cursor-pointer" />
+        <BiMessage className="text-blue-500 text-4xl cursor-pointer" />
+        <BiLike className="text-green-500 text-4xl cursor-pointer " />
+        <BiRightArrow
+          className="text-white text-4xl cursor-pointer"
+          onClick={handleSwipeLeft}
+        />
+      </div>
     </section>
   );
 }
