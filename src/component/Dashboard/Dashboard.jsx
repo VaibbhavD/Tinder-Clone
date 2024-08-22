@@ -18,6 +18,7 @@ import MatchesPage from "./MatchesPage";
 import UserMenu from "./UserMenu";
 import Modal from "../Modal/Modal";
 import PremiumCard from "./PremiumCard";
+import { BiMessage } from "react-icons/bi";
 
 function Dashboard() {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
@@ -186,92 +187,9 @@ function Dashboard() {
         </aside>
 
         {/* Mobile Sidebar */}
-        {isSideMenuOpen && (
-          <div
-            className="fixed inset-0 z-10 flex items-end bg-[#111418] bg-opacity-50 sm:items-center sm:justify-center"
-            onClick={() => setIsSideMenuOpen(false)}
-          />
-        )}
-        <aside
-          className={`fixed inset-y-0 z-20 flex-shrink-0 w-64 overflow-y-auto bg-[#111418] dark:bg-gray-800 md:hidden transition-transform duration-150 ease-in-out transform ${
-            isSideMenuOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
-        >
-          {/* Mobile Sidebar content */}
-          <div className="flex justify-center mt-10">
-            <img
-              className="h-40 w-40 rounded-full sm:block object-cover mr-2 border-4 border-[#FE4654]"
-              src={UserImage}
-              alt="Avatar"
-              loading="lazy"
-            />
-          </div>
-          <p className="text-center font-bold text-lg text-orange-500">
-            {firstName} {lastName}
-          </p>
-          <div className="flex-nowrap justify-end w-full mt-6">
-            <span
-              onClick={() => setIsUserProfile(true)}
-              className="flex items-center px-4 py-2 mt-3 cursor-pointer hover:border-white text-white border-2 border-gray-600 rounded-md"
-            >
-              <CgProfile />
-              <span className="mx-4 font-medium">Profile</span>
-            </span>
-            <span
-              onClick={() => setIsUserProfile(false)}
-              className="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md"
-            >
-              <MdExplore />
-              <span className="mx-4 font-medium">Explore</span>
-            </span>
-            <span className="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md">
-              <CiSettings />
-              <span className="mx-4 font-medium">Setting</span>
-            </span>
-            <span
-              onClick={logout}
-              className="flex items-center px-4 py-2 mt-3 text-white border-2 cursor-pointer hover:border-white border-gray-600 rounded-md"
-            >
-              <BiLogOut className="text-red-500" />
-              <span className="mx-4 font-medium">Logout</span>
-            </span>
-          </div>
-        </aside>
 
         {/* Main content */}
         <div className="flex-1 overflow-y-auto bg-[#111418] md:pt-6">
-          <header className="flex items-center justify-between bg-[#111418] text-white">
-            <button
-              className="text-white focus:outline-none md:hidden"
-              aria-label="Toggle sidebar menu"
-              onClick={toggleSideMenu}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
-            <div className="md:hidden flex items-center space-x-4">
-              <button
-                className="relative text-3xl focus:outline-none"
-                aria-label="Profile menu"
-                onClick={() => setIsUserProfile(true)}
-              >
-                <CgProfile />
-              </button>
-            </div>
-          </header>
-
           {/* Main Dashboard Data */}
           <main className="">
             <div className="grid mx-4  rounded-3xl">
@@ -284,6 +202,37 @@ function Dashboard() {
             </div>
             <div className="text-white"></div>
           </main>
+          <header className="md:hidden  mt-20 flex py-2 items-center justify-between bg-gray-700 text-white px-3">
+            <div className="w-full flex justify-between items-center gap-5">
+              <span
+                className="rounded-full p-1 bg-opacity-65 cursor-pointer"
+                onClick={() => setIsUserProfile(false)}
+                title="Explore"
+              >
+                <MdExplore className="text-3xl hover:text-orange-500" />
+              </span>
+
+              <span
+                className="rounded-full  p-1 bg-opacity-65 cursor-pointer"
+                title="Setting"
+              >
+                <BiMessage className="text-3xl hover:text-orange-500" />
+              </span>
+              <span
+                className="rounded-full  p-1 bg-opacity-65 cursor-pointer"
+                onClick={() => setIsUserProfile(true)}
+                title="Profile"
+              >
+                <CgProfile className="text-3xl hover:text-orange-500" />
+              </span>
+              <span
+                className="rounded-full  p-1 bg-opacity-65 cursor-pointer"
+                title="Setting"
+              >
+                <CiSettings className="text-3xl hover:text-orange-500" />
+              </span>
+            </div>
+          </header>
         </div>
       </div>
     </>
