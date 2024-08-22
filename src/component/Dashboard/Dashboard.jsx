@@ -197,7 +197,7 @@ function Dashboard() {
         <div className="flex-1 overflow-y-auto bg-[#111418] md:pt-6">
           {/* Main Dashboard Data */}
           <main className="">
-            <div className="grid mx-4  rounded-3xl">
+            <div className="grid mx-4 max-h-screen  rounded-3xl">
               {locationAccess &&
                 !isUserProfile &&
                 !isMessages &&
@@ -208,42 +208,45 @@ function Dashboard() {
               {isMessages && <MessagePage />}
               <Modal isshown={context.isPremiumCard}>{<PremiumCard />}</Modal>
             </div>
-            <div className="text-white"></div>
-          </main>
-          <header className="md:hidden  mt-20 flex py-2 items-center justify-between bg-gray-700 text-white px-3">
-            <div className="w-full flex justify-between items-center gap-5">
-              <span
-                className="rounded-full p-1 bg-opacity-65 cursor-pointer"
-                onClick={() => (setIsUserProfile(false), SetisMessages(false))}
-                title="Explore"
-              >
-                <MdExplore className="text-3xl hover:text-orange-500" />
-              </span>
+            <header className="md:hidden absolute bottom-0 w-full  mt-20 flex py-2 items-center justify-between bg-gray-700 text-white px-3">
+              <div className="w-full flex justify-between items-center gap-5">
+                <span
+                  className="rounded-full p-1 bg-opacity-65 cursor-pointer"
+                  onClick={() => (
+                    setIsUserProfile(false), SetisMessages(false)
+                  )}
+                  title="Explore"
+                >
+                  <MdExplore className="text-3xl hover:text-orange-500" />
+                </span>
 
-              <span
-                className="rounded-full  p-1 bg-opacity-65 cursor-pointer"
-                title="Setting"
-              >
-                <BiMessage
-                  className="text-3xl hover:text-orange-500"
-                  onClick={() => (setIsUserProfile(false), SetisMessages(true))}
-                />
-              </span>
-              <span
-                className="rounded-full  p-1 bg-opacity-65 cursor-pointer"
-                onClick={() => (setIsUserProfile(true), SetisMessages(false))}
-                title="Profile"
-              >
-                <CgProfile className="text-3xl hover:text-orange-500" />
-              </span>
-              <span
-                className="rounded-full  p-1 bg-opacity-65 cursor-pointer"
-                title="Setting"
-              >
-                <CiSettings className="text-3xl hover:text-orange-500" />
-              </span>
-            </div>
-          </header>
+                <span
+                  className="rounded-full  p-1 bg-opacity-65 cursor-pointer"
+                  title="Setting"
+                >
+                  <BiMessage
+                    className="text-3xl hover:text-orange-500"
+                    onClick={() => (
+                      setIsUserProfile(false), SetisMessages(true)
+                    )}
+                  />
+                </span>
+                <span
+                  className="rounded-full  p-1 bg-opacity-65 cursor-pointer"
+                  onClick={() => (setIsUserProfile(true), SetisMessages(false))}
+                  title="Profile"
+                >
+                  <CgProfile className="text-3xl hover:text-orange-500" />
+                </span>
+                <span
+                  className="rounded-full  p-1 bg-opacity-65 cursor-pointer"
+                  title="Setting"
+                >
+                  <CiSettings className="text-3xl hover:text-orange-500" />
+                </span>
+              </div>
+            </header>
+          </main>
         </div>
       </div>
     </>
