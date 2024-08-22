@@ -1,19 +1,18 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useRef, useState, useCallback } from "react";
 import Context from "../../context/context";
 import { useNavigate } from "react-router-dom";
 import { AuthActions } from "../../redux/AuthSlice";
 import { useDispatch } from "react-redux";
 
-function MobileSignup() {
-  // Country Codes
-  const countryPhoneCodes = [
-    { name: "United States", code: "+1", isoCode: "US" },
-    { name: "United Kingdom", code: "+44", isoCode: "GB" },
-    { name: "India", code: "+91", isoCode: "IN" },
-    { name: "Bangladesh", code: "+880", isoCode: "BD" },
-    { name: "Australia", code: "+61", isoCode: "AU" },
-  ];
+const countryPhoneCodes = [
+  { name: "United States", code: "+1", isoCode: "US" },
+  { name: "United Kingdom", code: "+44", isoCode: "GB" },
+  { name: "India", code: "+91", isoCode: "IN" },
+  { name: "Bangladesh", code: "+880", isoCode: "BD" },
+  { name: "Australia", code: "+61", isoCode: "AU" },
+];
 
+function MobileSignup() {
   const context = useContext(Context);
   const [isSendOtp, setIsSendOtp] = useState(false);
   const [countryCode, setCountryCode] = useState("+91");
@@ -23,43 +22,38 @@ function MobileSignup() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  // Create refs for each OTP input field
   const inputRefs = useRef([]);
 
-  // Generate a random 5-digit OTP
-  const generateOtp = () => {
+  const generateOtp = useCallback(() => {
     const generatedOtp = Math.floor(10000 + Math.random() * 90000).toString();
     setOtp(generatedOtp);
     alert(`Generated OTP: ${generatedOtp}`);
-  };
+  }, []);
 
-  // Handle the change event and move to the next input
-  const handleChange = (index, event) => {
+  const handleChange = useCallback((index, event) => {
     const value = event.target.value;
     setUserOtp((prev) => {
       const newOtp = prev.split("");
       newOtp[index] = value;
       return newOtp.join("");
     });
-    if (value.length === 1) {
-      if (index < inputRefs.current.length - 1) {
-        inputRefs.current[index + 1].focus();
-      } else {
-        inputRefs.current[index].blur();
-      }
+    if (value.length === 1 && index < inputRefs.current.length - 1) {
+      inputRefs.current[index + 1].focus();
+    } else if (value.length === 0 && index > 0) {
+      inputRefs.current[index - 1].focus();
     }
-  };
+  }, []);
 
-  // Send OTP function
-  const handleSendOtp = (e) => {
-    e.preventDefault();
-    setIsSendOtp(true);
-    generateOtp(); // Generate OTP
-  };
+  const handleSendOtp = useCallback(
+    (e) => {
+      e.preventDefault();
+      setIsSendOtp(true);
+      generateOtp();
+    },
+    [generateOtp]
+  );
 
-  // Verify OTP
-  const handleVerifyOtp = () => {
+  const handleVerifyOtp = useCallback(() => {
     if (otp === userOtp) {
       dispatch(AuthActions.Login(otp));
       context.SetuserPhoneNumber(phoneNumber);
@@ -69,7 +63,7 @@ function MobileSignup() {
     } else {
       alert("Invalid OTP, please try again.");
     }
-  };
+  }, [otp, userOtp, phoneNumber, dispatch, context, navigate]);
 
   return (
     <>

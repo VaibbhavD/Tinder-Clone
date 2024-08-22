@@ -1,13 +1,20 @@
 .user-card {
   transition: transform 0.5s ease, opacity 0.5s ease;
+  transform: translateX(0);
+  opacity: 1;
 }
 
-.user-card.left {
+.user-card.swipe-left {
   transform: translateX(-100%);
   opacity: 0;
 }
 
-.user-card.right {
+.user-card.swipe-right {
   transform: translateX(100%);
   opacity: 0;
+}
+
+.user-card.reset {
+  transform: translateX(0);
+  opacity: 1;
 }

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { useSwipeable } from "react-swipeable";
-import "./UserCard.css"; // Import the CSS file for animation styles
+import "./UserCard.css"; // Import the updated CSS file
 import UserMenu from "../Dashboard/UserMenu";
 
 function UserCard() {
@@ -88,31 +88,25 @@ function UserCard() {
     return age;
   };
 
-  const handleSwipeLeft = () => {
-    setDirection("left");
+  const handleSwipeLeft = useCallback(() => {
+    setDirection("swipe-left");
     setIsSwiping(true);
     setTimeout(() => {
-      setCurrentIndex((prevIndex) => {
-        // Move to the next user, loop to the beginning if at the end
-        return (prevIndex + 1) % users.length;
-      });
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % users.length);
       setIsSwiping(false);
-      setDirection("");
-    }, 300); // Adjusted animation duration
-  };
+      setDirection(""); // Reset direction to initial state
+    }, 300); // Match CSS transition duration
+  }, [users.length]);
 
-  const handleSwipeRight = () => {
-    setDirection("right");
+  const handleSwipeRight = useCallback(() => {
+    setDirection("swipe-right");
     setIsSwiping(true);
     setTimeout(() => {
-      setCurrentIndex((prevIndex) => {
-        // Move to the previous user, loop to the end if at the beginning
-        return (prevIndex + 1 + users.length) % users.length;
-      });
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % users.length);
       setIsSwiping(false);
-      setDirection("");
-    }, 300); // Adjusted animation duration
-  };
+      setDirection(""); // Reset direction to initial state
+    }, 300); // Match CSS transition duration
+  }, [users.length]);
 
   const handlers = useSwipeable({
     onSwipedLeft: handleSwipeLeft,
@@ -123,7 +117,7 @@ function UserCard() {
 
   return (
     <section
-      className=" mt-10 md:mt-4 rounded-lg w-full bg-[#111418]"
+      className="mt-10 md:mt-4 rounded-lg w-full bg-[#111418]"
       {...handlers}
     >
       <div className="w-full h-[550px] flex justify-center px-4">

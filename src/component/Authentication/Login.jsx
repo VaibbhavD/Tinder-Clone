@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useCallback } from "react";
 import { BsApple, BsFacebook } from "react-icons/bs";
 import { BiPhoneCall } from "react-icons/bi";
 import Context from "../../context/context";
@@ -10,7 +10,7 @@ import {
   facebookProvider,
 } from "../../firebase/FirebaseConfig";
 import { toast } from "react-toastify";
-import Loader from "../Loader/loader";
+import Loader from "../Loader/Loader"; // Ensure Loader is optimized
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { AuthActions } from "../../redux/AuthSlice";
@@ -29,7 +29,7 @@ function Login() {
     getUserDetails,
   } = context;
 
-  const handleGoogleSignUp = async () => {
+  const handleGoogleSignUp = useCallback(async () => {
     Setloader(true);
     try {
       const result = await signInWithPopup(Auth, googleProvider);
@@ -53,9 +53,17 @@ function Login() {
       LoginPopup();
       Setloader(false);
     }
-  };
+  }, [
+    Setloader,
+    SetUser,
+    MobileLoginPopup,
+    LoginPopup,
+    getUserDetails,
+    dispatch,
+    navigate,
+  ]);
 
-  const handleFacebookSignUp = async () => {
+  const handleFacebookSignUp = useCallback(async () => {
     Setloader(true);
     try {
       const result = await signInWithPopup(Auth, facebookProvider);
@@ -79,7 +87,15 @@ function Login() {
       LoginPopup();
       Setloader(false);
     }
-  };
+  }, [
+    Setloader,
+    SetUser,
+    MobileLoginPopup,
+    LoginPopup,
+    getUserDetails,
+    dispatch,
+    navigate,
+  ]);
 
   return (
     <div className="relative p-4 w-screen max-w-md h-full md:h-auto">
@@ -120,7 +136,7 @@ function Login() {
               <p>Get Started</p>
             </div>
             <p className="mt-2 text-sm leading-4 text-white px-6">
-              By tapping Log in or Continue. you agree to our{" "}
+              By tapping Log in or Continue, you agree to our{" "}
               <span className="text-blue-500 font-bold underline">Terms</span>.
               Learn how we process your data in our{" "}
               <span className="text-blue-500 font-bold underline">
@@ -168,8 +184,7 @@ function Login() {
           </div>
 
           <div className="text-center flex justify-center w-full py-5 text-lg font-bold text-white font-serif">
-            {!loader && <>Get the app!</>}
-            {loader && <Loader />}
+            {!loader ? <>Get the app!</> : <Loader />}
           </div>
 
           <div className="flex justify-center gap-5">

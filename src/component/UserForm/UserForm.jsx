@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useCallback } from "react";
 import Context from "../../context/context";
 import { useNavigate } from "react-router-dom";
 
@@ -6,7 +6,7 @@ function UserForm() {
   const { User, userPhoneNumber, AddNewUser } = useContext(Context);
   const navigate = useNavigate();
 
-  const [Useremail, setUserEmail] = useState(User?.email || "");
+  const [userEmail, setUserEmail] = useState(User?.email || "");
 
   const [formData, setFormData] = useState({
     firstName: User.firstName || "",
@@ -20,58 +20,68 @@ function UserForm() {
     termsAccepted: User.termsAccepted || false,
   });
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: type === "checkbox" ? checked : value,
-    });
-  };
+    }));
+  }, []);
 
-  const handleEmailChange = (e) => {
+  const handleEmailChange = useCallback((e) => {
     setUserEmail(e.target.value);
-  };
+  }, []);
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      if (formData.image) {
-        URL.revokeObjectURL(formData.image);
+  const handleImageChange = useCallback(
+    (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        if (formData.image) {
+          URL.revokeObjectURL(formData.image);
+        }
+        const newImageUrl = URL.createObjectURL(file);
+        setFormData((prev) => ({
+          ...prev,
+          image: newImageUrl,
+        }));
       }
-      const newImageUrl = URL.createObjectURL(file);
-      setFormData({
+    },
+    [formData.image]
+  );
+
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (!formData.termsAccepted) {
+        alert("You must agree to the terms and conditions");
+        return;
+      }
+
+      const newUser = {
         ...formData,
-        image: newImageUrl,
-      });
-    }
-  };
+        email: userEmail,
+      };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!formData.termsAccepted) {
-      alert("You must agree to the terms and conditions");
-      return;
-    }
+      addNewUser(newUser);
+    },
+    [formData, userEmail]
+  );
 
-    const newUser = {
-      ...formData,
-      email: Useremail,
-    };
-
-    addNewUser(newUser);
-  };
-
-  const addNewUser = (user) => {
-    localStorage.setItem("Users", JSON.stringify(user));
-    AddNewUser(user);
-    navigate("/dashboard");
-  };
+  const addNewUser = useCallback(
+    (user) => {
+      localStorage.setItem("Users", JSON.stringify(user));
+      AddNewUser(user);
+      navigate("/dashboard");
+    },
+    [AddNewUser, navigate]
+  );
 
   return (
     <div className="w-full h-screen pt-10 bg-[#111418]">
       <button
         className="p-3 lg:ml-44 duration-200 rounded-full bg-gray-600 text-white absolute top-5"
         onClick={() => navigate(-1)}
+        aria-label="Go back"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -96,6 +106,7 @@ function UserForm() {
             height={80}
             loading="lazy"
             className="pt-2"
+            alt="App logo"
           />
           <p className="text-white text-5xl font-bold">tinder</p>
         </div>
@@ -138,7 +149,7 @@ function UserForm() {
                       id="preview_img"
                       className="h-32 w-32 object-cover rounded-full"
                       src={formData.image || "https://via.placeholder.com/150"}
-                      alt="Profile photo"
+                      alt="Profile preview"
                       width={80}
                       height={80}
                     />
@@ -163,7 +174,7 @@ function UserForm() {
               <input
                 id="email"
                 type="email"
-                value={Useremail}
+                value={userEmail}
                 disabled={!!User?.email}
                 onChange={handleEmailChange}
                 className="block w-full px-4 py-2 mt-2 text-gray-400 bg-white border border-gray-300 rounded-md"
@@ -185,7 +196,7 @@ function UserForm() {
             </div>
             <div>
               <label className="text-white" htmlFor="birthDate">
-                Birth date
+                Birth Date
               </label>
               <input
                 id="birthDate"
@@ -239,6 +250,7 @@ function UserForm() {
               checked={formData.termsAccepted}
               onChange={handleChange}
               className="w-4 h-4 rounded"
+              required
             />
             <label htmlFor="termsAccepted" className="ms-2 text-sm font-medium">
               I agree with the{" "}

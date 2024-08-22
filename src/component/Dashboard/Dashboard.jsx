@@ -12,7 +12,6 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Context from "../../context/context";
 import { useContext } from "react";
-import Loader from "../Loader/loader";
 import MessagePage from "./MessagePage";
 import MatchesPage from "./MatchesPage";
 import UserMenu from "./UserMenu";

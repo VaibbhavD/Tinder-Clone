@@ -1,48 +1,61 @@
-import React, { useContext } from "react";
-import Hero_Section from "./Hero_Section";
-import Testimonal from "../Testimonal/Testimonal";
-import Footer from "./Footer";
-import Modal from "../Modal/Modal";
-import Login from "../Authentication/Login";
-import MobileSignup from "../Authentication/MobileSignup";
+import React, { useContext, Suspense, lazy, useMemo } from "react";
 import Context from "../../context/context";
 import PageLoader from "../Loader/PageLoader";
 
-function Home() {
+// Lazy-load non-critical components
+const Hero_Section = lazy(() => import("./Hero_Section"));
+const Testimonal = lazy(() => import("../Testimonal/Testimonal"));
+const Footer = lazy(() => import("./Footer"));
+const Modal = lazy(() => import("../Modal/Modal"));
+const Login = lazy(() => import("../Authentication/Login"));
+const MobileSignup = lazy(() => import("../Authentication/MobileSignup"));
+
+const Home = () => {
   const context = useContext(Context);
+  const {
+    PageLoader: isPageLoader,
+    isLoginPopup,
+    isMobileLoginPopup,
+  } = context;
+
+  const backgroundImageStyle = useMemo(
+    () => ({
+      backgroundImage:
+        "url('https://sketchelements.com/wp-content/uploads/2020/08/tinder-app-concept.png')",
+      // backgroundSize: "cover",
+      // backgroundPosition: "",
+    }),
+    []
+  );
+
   return (
     <>
-      {!context.PageLoader && (
+      {isPageLoader ? (
+        <PageLoader />
+      ) : (
         <div
-          className="w-full min-h-screen lg:bg-contain bg-fixed relative"
-          style={{
-            backgroundImage:
-              "url('https://sketchelements.com/wp-content/uploads/2020/08/tinder-app-concept.png')",
-            // Add vintage effect
-          }}
+          className="w-full min-h-screen bg-black bg-opacity-50 relative no-scrollbar"
+          style={backgroundImageStyle}
         >
-          {/* Pseudo-element for vignette effect */}
-          <div
-            className="absolute inset-0 bg-black opacity-30 pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(circle, transparent 60%, black 100%)",
-            }}
-          ></div>
-          <Hero_Section />
-          <Testimonal />
-          <Footer />
-          <Modal isshown={context.isLoginPopup}>
-            <Login />
-          </Modal>
-          <Modal isshown={context.isMobileLoginPopup}>
-            <MobileSignup />
-          </Modal>
+          <Suspense fallback={<PageLoader />}>
+            <Hero_Section />
+            <Testimonal />
+            <Footer />
+            {isLoginPopup && (
+              <Modal isshown={isLoginPopup}>
+                <Login />
+              </Modal>
+            )}
+            {isMobileLoginPopup && (
+              <Modal isshown={isMobileLoginPopup}>
+                <MobileSignup />
+              </Modal>
+            )}
+          </Suspense>
         </div>
       )}
-      {context.PageLoader && <PageLoader />}
     </>
   );
-}
+};
 
 export default Home;
