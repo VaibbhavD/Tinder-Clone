@@ -175,7 +175,7 @@ function PremiumCard() {
         </div>
 
         {/* <!-- Tile 3 -- */}
-        <div class="flex flex-col flex-grow overflow-hidden bg-white rounded-lg shadow-lg mt-19">
+        <div class="flex flex-col flex-grow overflow-hidden bg-white rounded-lg shadow-lg mt-19 mt-8">
           <div class="flex flex-col items-center p-10 bg-gray-200">
             <span class="font-semibold">Advanced</span>
             <div class="flex items-center">
