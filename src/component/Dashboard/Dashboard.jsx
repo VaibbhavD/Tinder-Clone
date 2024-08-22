@@ -19,6 +19,7 @@ import UserMenu from "./UserMenu";
 import Modal from "../Modal/Modal";
 import PremiumCard from "./PremiumCard";
 import { BiMessage } from "react-icons/bi";
+import SearchLoader from "../Loader/SearchLoader";
 
 function Dashboard() {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
@@ -29,6 +30,7 @@ function Dashboard() {
   const [isUserProfile, setIsUserProfile] = useState(false);
   const [isMessages, SetisMessages] = useState(false);
   const [isMatches, SetisMatches] = useState(true);
+  const [isSearchLoader, SetisSearchLoader] = useState(false);
 
   const context = useContext(Context);
   const {
@@ -69,6 +71,10 @@ function Dashboard() {
           const { latitude, longitude } = position.coords;
           setLocation({ latitude, longitude });
           getLocationName(latitude, longitude);
+          SetisSearchLoader(true);
+          setTimeout(() => {
+            SetisSearchLoader(false);
+          }, 5000);
         },
         (error) => {
           console.error("Location access denied:", error);
@@ -104,7 +110,7 @@ function Dashboard() {
     <>
       <div className={`flex h-screen bg-[#111418]`}>
         {/* Desktop sidebar */}
-        <aside className="z-20 flex-shrink-0 hidden w-96 border-r border-gray-500  overflow-y-auto bg-[#111418] md:block">
+        <aside className="z-20 no-scrollbar flex-shrink-0 hidden w-96 border-r border-gray-500  overflow-y-auto bg-[#111418] md:block">
           {/* first row */}
           <div className="text-white flex  py-6 bg-black px-4">
             {/* profile image */}
@@ -167,11 +173,13 @@ function Dashboard() {
 
           {/* Sidebar data */}
           <div>
-            {/* {isMatches && <MatchesPage />}
-            {isMessages && <MessagePage />} */}
-            <div className="w-full h-96 flex justify-center items-center">
-              <div class="border-gray-300 h-12 w-12 animate-spin rounded-full border-4 border-t-[#FE4654]" />
-            </div>
+            {isMatches && !isSearchLoader && <MatchesPage />}
+            {isMessages && !isSearchLoader && <MessagePage />}
+            {isSearchLoader && (
+              <div className="w-full h-96 flex justify-center items-center">
+                <div class="border-gray-300 h-12 w-12 animate-spin rounded-full border-4 border-t-[#FE4654]" />
+              </div>
+            )}
           </div>
           {isUserProfile && (
             <div className="w-full mt-60">
@@ -191,9 +199,11 @@ function Dashboard() {
           {/* Main Dashboard Data */}
           <main className="">
             <div className="grid mx-4  rounded-3xl">
-              {locationAccess && !isUserProfile && !isMessages && (
-                <UserCard location={locationName} />
-              )}
+              {locationAccess &&
+                !isUserProfile &&
+                !isMessages &&
+                !isSearchLoader && <UserCard location={locationName} />}
+              {isSearchLoader && <SearchLoader />}
               {!locationAccess && !isUserProfile && <ErrorPage />}
               {isUserProfile && <UserProfile />}
               {isMessages && <MessagePage />}
