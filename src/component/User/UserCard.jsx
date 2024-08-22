@@ -116,13 +116,10 @@ function UserCard() {
   });
 
   return (
-    <section
-      className="mt-10 md:mt-4 rounded-lg w-full bg-[#111418]"
-      {...handlers}
-    >
-      <div className="w-full h-[550px] flex justify-center px-4">
+    <section className="mt-4 rounded-lg w-full bg-[#111418]" {...handlers}>
+      <div className="w-full h-[400px] md:h-[550px] flex justify-center px-4">
         <div
-          className={`md:w-96 w-80 h-full bg-cover cursor-pointer flex justify-start items-end rounded-lg user-card ${
+          className={`md:w-96 w-72 h-full bg-cover cursor-pointer flex justify-start items-end rounded-lg user-card ${
             isSwiping ? direction : ""
           }`}
           style={{
