@@ -3,7 +3,7 @@ import { BiMessage } from "react-icons/bi";
 
 function MessagePage() {
   return (
-    <div className=" w-full mt-10 text-center content-center">
+    <div className=" w-full -mb-36 md:mt-10 text-center h-screen content-center">
       <div className="flex justify-center text-7xl">
         <BiMessage className="text-[#FE4654]" />
       </div>
