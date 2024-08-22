@@ -186,18 +186,17 @@ function Dashboard() {
           )}
         </aside>
 
-        {/* Mobile Sidebar */}
-
         {/* Main content */}
         <div className="flex-1 overflow-y-auto bg-[#111418] md:pt-6">
           {/* Main Dashboard Data */}
           <main className="">
             <div className="grid mx-4  rounded-3xl">
-              {locationAccess && !isUserProfile && (
+              {locationAccess && !isUserProfile && !isMessages && (
                 <UserCard location={locationName} />
               )}
               {!locationAccess && !isUserProfile && <ErrorPage />}
               {isUserProfile && <UserProfile />}
+              {isMessages && <MessagePage />}
               <Modal isshown={context.isPremiumCard}>{<PremiumCard />}</Modal>
             </div>
             <div className="text-white"></div>
@@ -206,7 +205,7 @@ function Dashboard() {
             <div className="w-full flex justify-between items-center gap-5">
               <span
                 className="rounded-full p-1 bg-opacity-65 cursor-pointer"
-                onClick={() => setIsUserProfile(false)}
+                onClick={() => (setIsUserProfile(false), SetisMessages(false))}
                 title="Explore"
               >
                 <MdExplore className="text-3xl hover:text-orange-500" />
@@ -216,11 +215,14 @@ function Dashboard() {
                 className="rounded-full  p-1 bg-opacity-65 cursor-pointer"
                 title="Setting"
               >
-                <BiMessage className="text-3xl hover:text-orange-500" />
+                <BiMessage
+                  className="text-3xl hover:text-orange-500"
+                  onClick={() => (setIsUserProfile(false), SetisMessages(true))}
+                />
               </span>
               <span
                 className="rounded-full  p-1 bg-opacity-65 cursor-pointer"
-                onClick={() => setIsUserProfile(true)}
+                onClick={() => (setIsUserProfile(true), SetisMessages(false))}
                 title="Profile"
               >
                 <CgProfile className="text-3xl hover:text-orange-500" />
