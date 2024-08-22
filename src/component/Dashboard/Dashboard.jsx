@@ -208,7 +208,7 @@ function Dashboard() {
               {isMessages && <MessagePage />}
               <Modal isshown={context.isPremiumCard}>{<PremiumCard />}</Modal>
             </div>
-            <header className="md:hidden absolute bottom-0 w-full  mt-20 flex py-2 items-center justify-between bg-gray-700 text-white px-3">
+            <header className="md:hidden absolute bottom-0 w-full flex py-2 items-center justify-between bg-gray-700 text-white px-3">
               <div className="w-full flex justify-between items-center gap-5">
                 <span
                   className="rounded-full p-1 bg-opacity-65 cursor-pointer"
