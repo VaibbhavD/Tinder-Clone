@@ -1,24 +1,39 @@
 import React from "react";
-import { BiLike } from "react-icons/bi";
+import { BiLike, BiMessageAdd } from "react-icons/bi";
 import { RiEjectFill } from "react-icons/ri";
 import { BiLeftArrow } from "react-icons/bi";
 import { BiRightArrow } from "react-icons/bi";
+import { IoReload } from "react-icons/io5";
+import { HeartIcon } from "@heroicons/react/16/solid";
+import { XMarkIcon } from "@heroicons/react/16/solid";
+import { StarIcon } from "@heroicons/react/16/solid";
 import { BiMessage } from "react-icons/bi";
+import { IoFlash } from "react-icons/io5";
 
 function UserMenu(props) {
   return (
-    <div className="flex justify-center items-center gap-6">
-      <BiLeftArrow
-        className="text-white text-4xl cursor-pointer"
-        onClick={props.handle}
-      />
-      <RiEjectFill className="text-red-600 text-4xl cursor-pointer" />
-      <BiMessage className="text-blue-500 text-4xl cursor-pointer" />
-      <BiLike className="text-green-500 text-4xl cursor-pointer " />
-      <BiRightArrow
-        className="text-white text-4xl cursor-pointer"
-        onClick={props.handle}
-      />
+    <div className="flex justify-center items-center mt-4">
+      <span className="rounded-full border border-gray-600 h-16 w-16 flex justify-center items-center ">
+        <BiMessage className="text-gray-700 hover:text-pink-500 text-3xl cursor-pointer" />
+      </span>
+      <span className="rounded-full border border-gray-600 flex justify-center items-center">
+        <XMarkIcon
+          className="text-gray-700 hover:text-red-600 text-xl h-20 cursor-pointer p-2"
+          onClick={props.swipeLeft}
+        />
+      </span>
+      <span className="rounded-full border border-gray-600 h-16 w-16 flex justify-center items-center ">
+        <StarIcon className="text-gray-700 hover:text-blue-500 text-xl cursor-pointer h-12" />
+      </span>
+      <span className="rounded-full border border-gray-600 h-20 w-20 flex justify-center items-center ">
+        <HeartIcon
+          className="text-gray-700 hover:text-green-500 text-4xl h-16 cursor-pointer p-2"
+          onClick={props.swipeRight}
+        />
+      </span>
+      <span className="rounded-full border border-gray-600 h-16 w-16 flex justify-center items-center ">
+        <IoFlash className="text-gray-700 hover:text-orange-500 text-4xl cursor-pointer" />
+      </span>
     </div>
   );
 }
