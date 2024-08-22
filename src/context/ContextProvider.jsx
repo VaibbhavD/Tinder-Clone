@@ -9,6 +9,7 @@ export const ContextProvider = (props) => {
   const [Mode, SetMode] = useState(localMode || "white");
   const [isLoginPopup, SetisLoginPopup] = useState(false);
   const [isMobileLoginPopup, SetisMobileLoginPopup] = useState(false);
+  const [isPremiumCard, SetisPremiumCard] = useState(false);
 
   // Loader state
   const [loader, Setloader] = useState(false);
@@ -109,6 +110,8 @@ export const ContextProvider = (props) => {
     userPhoneNumber: userPhoneNumber,
     SetuserPhoneNumber: SetuserPhoneNumber,
     getUserDetails: getUserDetails,
+    isPremiumCard: isPremiumCard,
+    SetisPremiumCard: SetisPremiumCard,
   };
 
   return <Context.Provider value={context}>{props.children}</Context.Provider>;
