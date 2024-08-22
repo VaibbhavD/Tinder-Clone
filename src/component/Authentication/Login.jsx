@@ -41,9 +41,10 @@ function Login() {
         SetUser(user);
         MobileLoginPopup();
       } else {
-        SetUser(user);
-        await getUserDetails(user.email);
+        console.log("exist");
         dispatch(AuthActions.Login(user.email));
+        await getUserDetails(user.email);
+        SetUser(user);
         navigate("/dashboard");
       }
     } catch (error) {
