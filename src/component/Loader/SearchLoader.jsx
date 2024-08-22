@@ -7,11 +7,11 @@ function SearchLoader() {
     <div class="flex justify-center items-center h-screen">
       <div class="relative flex justify-center items-center">
         {/* <!-- Outer Expanding Ring 1 --> */}
-        <div class="absolute rounded-full h-12 w-12 border-4 border-violet-500 animate-expand"></div>
+        <div class="absolute rounded-full h-12 w-12 border-4 border-[#FE4654]  animate-expand"></div>
         {/* <!-- Outer Expanding Ring 2 --> */}
-        <div class="absolute rounded-full h-12 w-12 border-4 border-violet-700 animate-expand-delayed"></div>
+        <div class="absolute rounded-full h-12 w-12 border-4 border-[#FE4654]  animate-expand-delayed"></div>
         {/* <!-- Inner Ring --> */}
-        <div class="absolute rounded-full h-12 w-12 border-4 border-violet-900"></div>
+        <div class="absolute rounded-full h-16 w-16 border-2 border-[#FE4654] "></div>
         {/* <!-- User Image --> */}
         <img
           src={context.User.image}
