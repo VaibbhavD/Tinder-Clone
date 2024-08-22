@@ -46,7 +46,7 @@ function UserCard() {
       firstName: "Sudhanshu",
       lastName: "Mishra",
       profileImage:
-        "https://media.istockphoto.com/photos/indian-man-picture-id178583962?k=6&m=178583962&s=612x612&w=0&h=tBib83dLUIcMeh0LzUj4ujfrFQvPRrYrw2zRI0AUEMk=",
+        "https://i.pinimg.com/originals/2e/3c/79/2e3c7911a51c311b02412bc58c0a91a3.jpg",
       email: "sudhanshumishra@gmail.com",
       phoneNumber: "91 9956284543",
       birthDate: "1992-02-14",
@@ -123,10 +123,10 @@ function UserCard() {
 
   return (
     <section
-      className="mb-2 mt-10 md:mt-4 rounded-lg w-full bg-[#111418]"
+      className=" mt-10 md:mt-4 rounded-lg w-full bg-[#111418]"
       {...handlers}
     >
-      <div className="w-full h-[550px] flex justify-center">
+      <div className="w-full h-[550px] flex justify-center px-4">
         <div
           className={`md:w-96 w-80 h-full bg-cover cursor-pointer flex justify-start items-end rounded-lg user-card ${
             isSwiping ? direction : ""
