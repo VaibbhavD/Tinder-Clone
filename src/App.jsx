@@ -6,6 +6,7 @@ import { AuthActions } from "./redux/AuthSlice";
 import { ToastContainer } from "react-toastify";
 import "./App.css";
 import Loader from "./component/Loader/loader";
+import PageLoader from "./component/Loader/PageLoader";
 
 // Lazy load components
 const Home = lazy(() => import("./component/Home/Home"));
@@ -26,7 +27,7 @@ function App() {
   return (
     <ContextProvider>
       <Router>
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={isLoggedIn ? <Dashboard /> : <Home />} />
             <Route path="/onboard" element={<UserForm />} />
