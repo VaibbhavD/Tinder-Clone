@@ -128,7 +128,7 @@ function Dashboard() {
               </span>
               <span
                 className="rounded-full bg-black p-1 bg-opacity-65 cursor-pointer"
-                onClick={() => setIsUserProfile(false)}
+                onClick={() => (setIsUserProfile(false), SetisMessages(false))}
                 title="Explore"
               >
                 <MdExplore className="text-2xl hover:text-orange-500" />
