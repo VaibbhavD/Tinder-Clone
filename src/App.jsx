@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { AuthActions } from "./redux/AuthSlice";
 import { ToastContainer } from "react-toastify";
 import "./App.css";
-import Loader from "./component/Loader/loader";
 import PageLoader from "./component/Loader/PageLoader";
 
 // Lazy load components
