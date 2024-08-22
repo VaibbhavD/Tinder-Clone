@@ -10,11 +10,11 @@ import {
   facebookProvider,
 } from "../../firebase/FirebaseConfig";
 import { toast } from "react-toastify";
-import Loader from "../Loader/Loader"; // Ensure Loader is optimized
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { AuthActions } from "../../redux/AuthSlice";
 import { useNavigate } from "react-router-dom";
+import Loader from "../Loader/loader";
 
 function Login() {
   const context = useContext(Context);
