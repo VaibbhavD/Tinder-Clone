@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { useSwipeable } from "react-swipeable";
 import "./UserCard.css"; // Import the CSS file for animation styles
-import { BiLike } from "react-icons/bi";
-import { RiEjectFill } from "react-icons/ri";
-import { BiLeftArrow } from "react-icons/bi";
-import { BiRightArrow } from "react-icons/bi";
-import { BiMessage } from "react-icons/bi";
+import UserMenu from "../Dashboard/UserMenu";
 
 function UserCard() {
   const users = [
@@ -149,19 +145,7 @@ function UserCard() {
           </div>
         </div>
       </div>
-      <div className="flex justify-center items-center gap-6 mt-5">
-        <BiLeftArrow
-          className="text-white text-4xl cursor-pointer"
-          onClick={handleSwipeLeft}
-        />
-        <RiEjectFill className="text-red-600 text-4xl cursor-pointer" />
-        <BiMessage className="text-blue-500 text-4xl cursor-pointer" />
-        <BiLike className="text-green-500 text-4xl cursor-pointer " />
-        <BiRightArrow
-          className="text-white text-4xl cursor-pointer"
-          onClick={handleSwipeLeft}
-        />
-      </div>
+      <UserMenu swipeLeft={handleSwipeLeft} swipeRight={handleSwipeRight} />
     </section>
   );
 }
