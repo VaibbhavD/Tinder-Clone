@@ -101,18 +101,18 @@ function Dashboard() {
     <>
       <div className={`flex h-screen bg-[#111418]`}>
         {/* Desktop sidebar */}
-        <aside className="z-20 flex-shrink-0 hidden w-96 border-r-2  overflow-y-auto bg-[#111418] md:block">
+        <aside className="z-20 flex-shrink-0 hidden w-96 border-r border-gray-500  overflow-y-auto bg-[#111418] md:block">
           {/* first row */}
-          <div className="text-white flex  py-6 bg-[#FE4654] px-4">
+          <div className="text-white flex  py-6 bg-black px-4">
             {/* profile image */}
             <div className="flex justify-center items-center">
               <img
-                className="hidden h-10 w-10 rounded-full sm:block object-cover mr-2 border-2 border-[#FE4654]"
+                className="hidden h-10 w-10 rounded-full sm:block object-cover mr-2"
                 src={image}
                 alt="Avatar"
                 loading="lazy"
               />
-              <p className="text-center font-bold text-lg">{firstName}</p>
+              <p className="text-center text-md font-bold">{firstName}</p>
             </div>
             {/* menues */}
             <div className="flex justify-end items-center w-full gap-6">
@@ -121,20 +121,20 @@ function Dashboard() {
                 onClick={() => setIsUserProfile(true)}
                 title="Profile"
               >
-                <CgProfile className="text-2xl" />
+                <CgProfile className="text-2xl hover:text-orange-500" />
               </span>
               <span
                 className="rounded-full bg-black p-1 bg-opacity-65 cursor-pointer"
                 onClick={() => setIsUserProfile(false)}
                 title="Explore"
               >
-                <MdExplore className="text-2xl" />
+                <MdExplore className="text-2xl hover:text-orange-500" />
               </span>
               <span
                 className="rounded-full bg-black p-1 bg-opacity-65 cursor-pointer"
                 title="Setting"
               >
-                <CiSettings className="text-2xl" />
+                <CiSettings className="text-2xl hover:text-orange-500" />
               </span>
             </div>
           </div>
