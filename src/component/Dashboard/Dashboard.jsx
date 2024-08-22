@@ -274,17 +274,17 @@ function Dashboard() {
 
           {/* Main Dashboard Data */}
           <main className="">
-            <div className="grid mx-4 rounded-3xl">
+            <div className="grid mx-4  rounded-3xl">
               {locationAccess && !isUserProfile && (
                 <UserCard location={locationName} />
               )}
               {!locationAccess && !isUserProfile && <ErrorPage />}
               {isUserProfile && <UserProfile />}
+              <Modal isshown={context.isPremiumCard}>{<PremiumCard />}</Modal>
             </div>
             <div className="text-white"></div>
           </main>
         </div>
-        <Modal isshown={context.isPremiumCard}>{<PremiumCard />}</Modal>
       </div>
     </>
   );
