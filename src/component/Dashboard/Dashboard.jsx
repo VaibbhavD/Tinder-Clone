@@ -16,6 +16,8 @@ import Loader from "../Loader/loader";
 import MessagePage from "./MessagePage";
 import MatchesPage from "./MatchesPage";
 import UserMenu from "./UserMenu";
+import Modal from "../Modal/Modal";
+import PremiumCard from "./PremiumCard";
 
 function Dashboard() {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
@@ -237,7 +239,7 @@ function Dashboard() {
         </aside>
 
         {/* Main content */}
-        <div className="flex-1 overflow-y-auto bg-[#111418] md:pt-14">
+        <div className="flex-1 overflow-y-auto bg-[#111418] md:pt-6">
           <header className="flex items-center justify-between bg-[#111418] text-white">
             <button
               className="text-white focus:outline-none md:hidden"
@@ -272,7 +274,7 @@ function Dashboard() {
 
           {/* Main Dashboard Data */}
           <main className="">
-            <div className="grid mb-4 mx-4 rounded-3xl">
+            <div className="grid mx-4 rounded-3xl">
               {locationAccess && !isUserProfile && (
                 <UserCard location={locationName} />
               )}
@@ -282,6 +284,7 @@ function Dashboard() {
             <div className="text-white"></div>
           </main>
         </div>
+        <Modal isshown={context.isPremiumCard}>{<PremiumCard />}</Modal>
       </div>
     </>
   );
