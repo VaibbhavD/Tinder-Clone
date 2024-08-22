@@ -197,7 +197,7 @@ function Dashboard() {
         <div className="flex-1 overflow-y-auto bg-[#111418] md:pt-6">
           {/* Main Dashboard Data */}
           <main className="">
-            <div className="grid mx-4 max-h-screen  rounded-3xl">
+            <div className="grid mx-4 max-h-screen overflow-auto rounded-3xl">
               {locationAccess &&
                 !isUserProfile &&
                 !isMessages &&
