@@ -164,8 +164,11 @@ function Dashboard() {
 
           {/* Sidebar data */}
           <div>
-            {isMatches && <MatchesPage />}
-            {isMessages && <MessagePage />}
+            {/* {isMatches && <MatchesPage />}
+            {isMessages && <MessagePage />} */}
+            <div className="w-full h-96 flex justify-center items-center">
+              <div class="border-gray-300 h-12 w-12 animate-spin rounded-full border-4 border-t-[#FE4654]" />
+            </div>
           </div>
           {isUserProfile && (
             <div className="w-full mt-60">
