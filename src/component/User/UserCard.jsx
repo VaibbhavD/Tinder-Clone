@@ -10,7 +10,7 @@ function UserCard() {
       firstName: "Rohit",
       lastName: "Patil",
       profileImage:
-        "https://tse1.mm.bing.net/th?id=OIP.XH-rEsfM9YM8W98wnn4tKAHaHa&pid=Api&P=0&h=180",
+        "https://media.istockphoto.com/photos/portrait-of-a-beautifull-smiling-man-picture-id500060262?k=6&m=500060262&s=612x612&w=0&h=dqPFs-C5bejj3tCI_pZFctS5xOHUtipA1FHPUU6aAwU=",
       email: "rohitpatil@gmail.com",
       phoneNumber: "91 8265124789",
       birthDate: "1999-01-01",
@@ -21,7 +21,8 @@ function UserCard() {
     {
       firstName: "Smitha",
       lastName: "Jain",
-      profileImage: "http://indianloop.com/desi/images/indianwoman-small.jpg",
+      profileImage:
+        "https://wallpapers.com/images/hd/indian-girl-casual-photographer-camera-of1e2gv8qut3bn37.jpg",
       email: "smithajain@gmail.com",
       phoneNumber: "91 9865123547",
       birthDate: "1997-05-12",
@@ -33,7 +34,7 @@ function UserCard() {
       firstName: "Aishwarya",
       lastName: "Marathe",
       profileImage:
-        "https://i.pinimg.com/originals/e0/99/a5/e099a5c50757143c2561efca42ba5c84.jpg",
+        "https://i.pinimg.com/originals/5f/79/b0/5f79b0a127243af63b881f042decc2d7.jpg",
       email: "aishwaryam123@gmail.com",
       phoneNumber: "91 7895621453",
       birthDate: "2000-08-21",
@@ -45,7 +46,7 @@ function UserCard() {
       firstName: "Sudhanshu",
       lastName: "Mishra",
       profileImage:
-        "https://www.voicendata.com/wp-content/uploads/2017/09/AnandaSuresh_54853.jpg",
+        "https://media.istockphoto.com/photos/indian-man-picture-id178583962?k=6&m=178583962&s=612x612&w=0&h=tBib83dLUIcMeh0LzUj4ujfrFQvPRrYrw2zRI0AUEMk=",
       email: "sudhanshumishra@gmail.com",
       phoneNumber: "91 9956284543",
       birthDate: "1992-02-14",
@@ -57,10 +58,10 @@ function UserCard() {
       firstName: "Rajaram",
       lastName: "Patil",
       profileImage:
-        "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/d728e973143373.5bffa2c9aaa2c.jpg",
+        "https://thumbs.dreamstime.com/b/jonge-indische-mens-52215483.jpg",
       email: "robert.wilson@example.com",
       phoneNumber: "91 6532489512",
-      birthDate: "1975-11-30",
+      birthDate: "1994-11-30",
       gender: "Male",
       relationship: "Married",
       skills: ["Backend Development", "Node.js", "Database Management"],
